@@ -11,11 +11,12 @@ USING_NS_CC;
 //场景枚举
 enum SCENE_TYPE{
 	SCENE_MENU,        //开始菜单
+	SCENE_TOLLGATE,    //关卡
 	SCENE_MENU_HELP, 
 	SCENE_MENU_SETTINGS,
 	SCENE_WIN,            //胜利
-	SCENE_FAIL,            //失败
-	SCENE_TOLLGATE    //关卡
+	SCENE_FAIL            //失败
+	
 };
 
 class SceneManager : public Ref{

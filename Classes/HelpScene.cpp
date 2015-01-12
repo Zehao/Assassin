@@ -1,6 +1,7 @@
 #include "HelpScene.h"
-
+#include "SceneManager.h"
 #include "cocostudio\CocoStudio.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 using namespace cocostudio;
@@ -31,8 +32,12 @@ bool HelpScene::init()
     
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto widgets = GUIReader::getInstance()->widgetFromJsonFile("menu/help.ExportJson");
+	auto widgets = GUIReader::getInstance()->widgetFromJsonFile("menu/help.json");
 	assert(widgets != nullptr);
+
+	auto back = static_cast<Button*>(widgets->getChildByName("Button_back"));
+	
+	back->addClickEventListener(CC_CALLBACK_1(HelpScene::menuCloseCallback, this));
 
 	this->addChild(widgets);
 
@@ -43,14 +48,5 @@ bool HelpScene::init()
 
 void HelpScene::menuCloseCallback(Ref* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-    return;
-#endif
-
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+	SceneManager::getInstance()->changeScene(SCENE_MENU, false);
 }

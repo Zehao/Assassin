@@ -14,6 +14,10 @@ public:
 
 	// a selector callback
 	void menuHelp(cocos2d::Ref* pSender);
+	void menuQuit(cocos2d::Ref* pSender);
+	void menuNewGame(cocos2d::Ref* pSender);
+	void menuSettings(cocos2d::Ref* pSender);
+
 
 	CREATE_FUNC(MenuScene);
 };

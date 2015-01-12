@@ -26,19 +26,20 @@ bool MenuScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto widgets = GUIReader::getInstance()->widgetFromJsonFile("menu/Prestart.ExportJson");
+	auto widgets = GUIReader::getInstance()->widgetFromJsonFile("menu/menu.json");
 
 	auto new_game = static_cast<Button *>(widgets->getChildByName("Button_new"));
 	auto settings = static_cast<Button *>(widgets->getChildByName("Button_setting") );
 	auto help = static_cast<Button *>(widgets->getChildByName("Button_help"));
 	auto quit = static_cast<Button *>(widgets->getChildByName("Button_quit"));
-	
+
+	new_game->addClickEventListener(CC_CALLBACK_1(MenuScene::menuNewGame, this));
+
+	settings->addClickEventListener(CC_CALLBACK_1(MenuScene::menuSettings, this));
+
 	help->addClickEventListener(CC_CALLBACK_1(MenuScene::menuHelp,this));
 
-
-	Vec2 origin = Director::getInstance()->getVisibleSize();
-
-	//widgets->setPosition(origin / 2);
+	quit->addClickEventListener(CC_CALLBACK_1(MenuScene::menuQuit, this));
 
 	this->addChild(widgets);
 
@@ -52,3 +53,18 @@ void MenuScene::menuHelp(Ref* pSender)
 	SceneManager::getInstance()->changeScene(SCENE_MENU_HELP,true);
 }
 
+void MenuScene::menuQuit(Ref* pSender)
+{
+	Director::getInstance()->end();
+}
+
+
+void MenuScene::menuSettings(Ref* pSender)
+{
+
+}
+
+void MenuScene::menuNewGame(Ref* pSender)
+{
+
+}

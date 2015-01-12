@@ -9,11 +9,13 @@
   "dataScale": 1,
   "designHeight": 600,
   "designWidth": 800,
-  "textures": [
-    "PreStart0.plist"
-  ],
+  "textures": [],
   "texturesPng": [
-    "PreStart0.png"
+    "menubg.png",
+    "new.png",
+    "help.png",
+    "sett.png",
+    "quit.png"
   ],
   "version": "1.4.0.1",
   "widgetTree": {
@@ -44,17 +46,17 @@
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.47,
-          "positionPercentY": 0.8477889,
+          "positionPercentY": 0.8466667,
           "positionType": 0,
           "rotation": 0,
           "scaleX": 1,
           "scaleY": 1,
-          "sizePercentX": 0.12875,
-          "sizePercentY": 0.06666667,
+          "sizePercentX": 0.5,
+          "sizePercentY": 0.116666667,
           "sizeType": 0,
           "tag": 1,
           "touchAble": true,
-          "useMergedTexture": true,
+          "useMergedTexture": false,
           "visible": true,
           "width": 400,
           "x": 376,
@@ -74,9 +76,9 @@
           "fontType": 0,
           "normal": null,
           "normalData": {
-            "path": "menu/new.png",
+            "path": "new.png",
             "plistFile": "",
-            "resourceType": 1
+            "resourceType": 0
           },
           "pressed": null,
           "pressedData": {
@@ -117,17 +119,17 @@
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.47,
-          "positionPercentY": 0.4039,
+          "positionPercentY": 0.404444426,
           "positionType": 0,
           "rotation": 0,
           "scaleX": 1,
           "scaleY": 1,
-          "sizePercentX": 0.12875,
-          "sizePercentY": 0.06666667,
+          "sizePercentX": 0.5,
+          "sizePercentY": 0.116666667,
           "sizeType": 0,
           "tag": 3,
           "touchAble": true,
-          "useMergedTexture": true,
+          "useMergedTexture": false,
           "visible": true,
           "width": 400,
           "x": 376,
@@ -147,9 +149,9 @@
           "fontType": 0,
           "normal": null,
           "normalData": {
-            "path": "menu/help.png",
+            "path": "help.png",
             "plistFile": "",
-            "resourceType": 1
+            "resourceType": 0
           },
           "pressed": null,
           "pressedData": {
@@ -190,21 +192,21 @@
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.47,
-          "positionPercentY": 0.626677752,
+          "positionPercentY": 0.6255555,
           "positionType": 0,
           "rotation": 0,
           "scaleX": 1,
           "scaleY": 1,
-          "sizePercentX": 0.12875,
-          "sizePercentY": 0.06666667,
+          "sizePercentX": 0.5,
+          "sizePercentY": 0.116666667,
           "sizeType": 0,
           "tag": 2,
           "touchAble": true,
-          "useMergedTexture": true,
+          "useMergedTexture": false,
           "visible": true,
           "width": 400,
           "x": 376,
-          "y": 376,
+          "y": 375,
           "capInsetsHeight": 1,
           "capInsetsWidth": 1,
           "capInsetsX": 0,
@@ -220,9 +222,9 @@
           "fontType": 0,
           "normal": null,
           "normalData": {
-            "path": "menu/sett.png",
+            "path": "sett.png",
             "plistFile": "",
-            "resourceType": 1
+            "resourceType": 0
           },
           "pressed": null,
           "pressedData": {
@@ -263,17 +265,17 @@
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.47,
-          "positionPercentY": 0.184455574,
+          "positionPercentY": 0.183333337,
           "positionType": 0,
           "rotation": 0,
           "scaleX": 1,
           "scaleY": 1,
-          "sizePercentX": 0.12875,
-          "sizePercentY": 0.06666667,
+          "sizePercentX": 0.5,
+          "sizePercentY": 0.116666667,
           "sizeType": 0,
           "tag": 4,
           "touchAble": true,
-          "useMergedTexture": true,
+          "useMergedTexture": false,
           "visible": true,
           "width": 400,
           "x": 376,
@@ -293,9 +295,9 @@
           "fontType": 0,
           "normal": null,
           "normalData": {
-            "path": "menu/quit.png",
+            "path": "quit.png",
             "plistFile": "",
-            "resourceType": 1
+            "resourceType": 0
           },
           "pressed": null,
           "pressedData": {
@@ -343,7 +345,7 @@
       "sizeType": 0,
       "tag": 0,
       "touchAble": true,
-      "useMergedTexture": true,
+      "useMergedTexture": false,
       "visible": true,
       "width": 800,
       "x": 0,
@@ -353,7 +355,7 @@
       "backGroundImageData": {
         "path": "menubg.png",
         "plistFile": "",
-        "resourceType": 1
+        "resourceType": 0
       },
       "backGroundScale9Enable": false,
       "bgColorB": 255,
