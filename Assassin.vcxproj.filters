@@ -16,15 +16,15 @@
     <Filter Include="entity">
       <UniqueIdentifier>{9fd5a5ff-8583-437d-b6eb-e9c2bb4c378c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="managers">
+      <UniqueIdentifier>{159a715b-9e1a-40d6-8910-5a09233a0bc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="Classes\AppDelegate.cpp" />
-    <ClCompile Include="Classes\SceneManager.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\HelpScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -43,15 +43,18 @@
     <ClCompile Include="Classes\Hero.cpp">
       <Filter>entity</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\AnimationManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\SceneManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="Classes\AppDelegate.h" />
-    <ClInclude Include="Classes\SceneManager.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\HelpScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -72,6 +75,12 @@
     </ClInclude>
     <ClInclude Include="Classes\Hero.h">
       <Filter>entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\AnimationManager.h">
+      <Filter>managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\SceneManager.h">
+      <Filter>managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
