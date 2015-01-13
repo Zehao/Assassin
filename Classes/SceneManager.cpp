@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "MenuScene.h"
 #include "HelpScene.h"
+#include "MapScene.h"
 
 SceneManager* SceneManager::instance = nullptr;
 
@@ -37,6 +38,7 @@ void SceneManager::changeScene(SCENE_TYPE scene, bool isforward){
 	case SCENE_FAIL:
 		break;
 	case SCENE_TOLLGATE:
+		p = MapScene::createScene();
 		break;
 	case SCENE_MENU_HELP:
 		p = HelpScene::createScene();

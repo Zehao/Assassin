@@ -28,7 +28,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
         glview = GLViewImpl::create("Assassin");
-		glview->setFrameSize(800, 600);
+		glview->setFrameSize(1024,768);
         director->setOpenGLView(glview);
     }
 
@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-	SceneManager::getInstance()->changeScene(SCENE_MENU);
+	SceneManager::getInstance()->changeScene(SCENE_TOLLGATE);
 
     return true;
 }

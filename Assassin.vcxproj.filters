@@ -10,6 +10,12 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{4523b218-f2d2-4d11-88a8-e76f48962a23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{a5fc830d-fd87-4463-9063-79da8da7e741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="entity">
+      <UniqueIdentifier>{9fd5a5ff-8583-437d-b6eb-e9c2bb4c378c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,6 +30,18 @@
     </ClCompile>
     <ClCompile Include="Classes\MenuScene.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\MapScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Entity.cpp">
+      <Filter>entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Monster.cpp">
+      <Filter>entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Hero.cpp">
+      <Filter>entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,10 +58,28 @@
     <ClInclude Include="Classes\MenuScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\MapScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\config.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Entity.h">
+      <Filter>entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Monster.h">
+      <Filter>entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Hero.h">
+      <Filter>entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="routines.txt" />
   </ItemGroup>
 </Project>
