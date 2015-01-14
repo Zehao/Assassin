@@ -19,13 +19,19 @@ private:
 	 TMXLayer* _bgLayer;
 	 TMXTiledMap* _map;
 	 TMXObjectGroup* _entityLayer;
+	 Size _tileSize;
+	 int _resHeight;
+	 int _resWidth;
 public:
 	CREATE_FUNC(MapLayer);
 
 	virtual bool init() override;
-
+	
 	TMXObjectGroup* getEntitesLayer(){ return _entityLayer; }
-	bool isAccessible(const Vec2&  tile);
+     bool isAccessible(const Vec2&  pointA, const Vec2& pointB);
+
+protected:
+	inline const Vec2& point2Tile(const Vec2& point);
 };
 
 #endif

@@ -166,8 +166,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="Classes\MenuScene.h" />
     <ClInclude Include="Classes\Monster.h" />
     <ClInclude Include="Classes\SceneManager.h" />
+    <ClInclude Include="Classes\types.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">

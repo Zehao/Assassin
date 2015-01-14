@@ -91,9 +91,6 @@
     <ClInclude Include="Classes\SceneManager.h">
       <Filter>managers</Filter>
     </ClInclude>
-    <ClInclude Include="types.h">
-      <Filter>config</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\config.h">
       <Filter>config</Filter>
     </ClInclude>
@@ -108,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="Classes\MainScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\types.h">
+      <Filter>config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

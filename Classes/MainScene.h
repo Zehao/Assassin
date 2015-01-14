@@ -22,6 +22,19 @@ public:
 	CREATE_FUNC(MainScene);
 	static Scene* createScene();
 	virtual bool init() override;
+
+
+
+
+	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+	virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+
+	virtual bool onTouchBegan(Touch *touch, Event *unused_event);
+	virtual void onTouchMoved(Touch *touch, Event *unused_event);
+	virtual void onTouchEnded(Touch *touch, Event *unused_event);
+	virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+
+
 };
 
 #endif

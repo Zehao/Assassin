@@ -28,14 +28,6 @@ private:
 public:
 	CREATE_FUNC(EntityLayer);
 	void setEntities(TMXObjectGroup* layer);
-
-	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
-	virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
-
-	virtual bool onTouchBegan(Touch *touch, Event *unused_event);
-	virtual void onTouchMoved(Touch *touch, Event *unused_event);
-	virtual void onTouchEnded(Touch *touch, Event *unused_event);
-	virtual void onTouchCancelled(Touch *touch, Event *unused_event);
-
+	Entity* getHero(){ return _hero; }
 };
 #endif
