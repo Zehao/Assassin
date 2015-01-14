@@ -20,9 +20,16 @@ bool EntityLayer::init(){
 	 * @see Layer::setKeyboardEnabled
 	*/
 	this->setKeyboardEnabled(true);
+
 	this->setTouchEnabled(true);
 
+	EventListenerTouchOneByOne* eventListener = EventListenerTouchOneByOne::create();
+	eventListener->onTouchBegan = CC_CALLBACK_2(EntityLayer::onTouchBegan, this);
+	eventListener->onTouchMoved = CC_CALLBACK_2(EntityLayer::onTouchMoved, this);
+	eventListener->onTouchCancelled = CC_CALLBACK_2(EntityLayer::onTouchCancelled, this);
+	eventListener->onTouchEnded = CC_CALLBACK_2(EntityLayer::onTouchEnded, this);
 
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
 
 
 	return true;
