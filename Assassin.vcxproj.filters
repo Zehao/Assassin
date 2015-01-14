@@ -19,6 +19,9 @@
     <Filter Include="managers">
       <UniqueIdentifier>{159a715b-9e1a-40d6-8910-5a09233a0bc3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="layers">
+      <UniqueIdentifier>{158eec82-f285-4adb-bc5c-4e5149f4e1ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -29,9 +32,6 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\MenuScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\MapScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Entity.cpp">
@@ -49,6 +49,21 @@
     <ClCompile Include="Classes\SceneManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\config.cpp">
+      <Filter>config</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\MapLayer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\EntityLayer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\InfoLayer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\MainScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -60,12 +75,6 @@
     </ClInclude>
     <ClInclude Include="Classes\MenuScene.h">
       <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\MapScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\config.h">
-      <Filter>config</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Entity.h">
       <Filter>entity</Filter>
@@ -81,6 +90,24 @@
     </ClInclude>
     <ClInclude Include="Classes\SceneManager.h">
       <Filter>managers</Filter>
+    </ClInclude>
+    <ClInclude Include="types.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\config.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\MapLayer.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\EntityLayer.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\InfoLayer.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\MainScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

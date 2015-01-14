@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "SceneManager.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -27,9 +28,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::create("Assassin");
-		glview->setFrameSize(1024,768);
+        glview = GLViewImpl::create("Assassin | 1200*900");
+		glview->setFrameSize(from_str<double>(CONF("FRAME_WIDTH")), from_str<double>(CONF("FRAME_HEIGHT")));
+		
         director->setOpenGLView(glview);
+		glview->setDesignResolutionSize(from_str<double>(CONF("RESOLUTION_WIDTH")), from_str<double>(CONF("RESOLUTION_HEIGHT")), kResolutionNoBorder);
     }
 
     // turn on display FPS

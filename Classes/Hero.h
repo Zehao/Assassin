@@ -9,12 +9,13 @@ private:
 	int _mp;
 
 public:
-
+	//void runAnimation(ANIMATION_TYPE type) override;
 	
 public:
-	CREATE_FUNC(Hero);
+	//CREATE_FUNC(Hero);
 	Hero();
 	virtual bool init() override;
+
 };
 
 

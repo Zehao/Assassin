@@ -26,4 +26,102 @@
    eJztmlFuAyEMRHOG3P8y3ZNVVRUFIcBjz9jsJjsSH1XAHj8M3W36eNy6deuT9fN8j2+Qut4z8ms9sb76WN/Ij/G24pexN2eQsl4PP298JO7x/B9VnK16vR76NX0tozkKr8dknIlhJNasH9i4KL/DmSeiVW+wPWLxi8a1Yqh6EFm7+lzdJ6NzzcS1xOyd525D+Hn2Aj1vDD9U7N2B1GWtUeXp76rd/CJn2ps3siba755Y0XqyGWZ53N032c832XtcxQ+5N1bPBREp+znjvFmxPXeuxY/ZJ4VUMWfrUVYqfuhQage/o5u7eie5GsNI/CzvCoYznxmK1pq590p+lfJ4yK6JOb87hfpo52Se46vx+5Plo/88o74XPyt+5d/CECF1Wve0xVfh7Uz8vD2yi5+lXWd4tKfRtTPvVbVVM5ydCWa9NS9b1XmY8xU596N5ypqz9irj97933Wy+ul5VfWhMhgO7bmetEd/WO7vKH1uX8l5RDS+nan/fwK+y5zLZoe+Hs2fziLeVP3V9DEMrH/LO0s5FYzOe2JqqepQ5gyoPiv7YxS8qlQfl/6FZPmY/R3Kv5lXuofI7Wq+P2T02usuQWj1MMvlFmXo9zNipv2taeTkrP0QjbpkMUe8MP4ZJhN+K4U5+qKxnpwg/VDN+rbcqft5aR2sYflGfI4at0H5E5nl8ofLwa+dYnj3sVvO9XFT8vHeQd6D3FZpnJSQ+WpOHRxa7SH8xNUWe8aP5WH5WflQqdquYjAdkjTd2llY1RL/fYvJejd8o30ujO1TpN+OOGsXO1CqH4pnZypvFD6mPlRXby6+NWTE8NaoZInH7943R2uw+UzJk5zHngFGfJ9qrozUeD7P52XdIlVCPynP8KexeyvTHMLkCuwpdpY9uXVO/wDzzZg==
   </data>
  </layer>
+ <objectgroup name="entity">
+  <object x="1257.58" y="2996.97"/>
+  <object x="206.061" y="2369.7">
+   <properties>
+    <property name="hero" value=""/>
+   </properties>
+  </object>
+  <object x="587.727" y="1067.64">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="651.394" y="1128.27">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="704.939" y="1151.52">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="631.818" y="2347.09">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="1229.03" y="2382.36">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="1815.06" y="1917.18">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="1761.22" y="953.515">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="1834" y="1024">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="1887" y="1074.67">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="2433.24" y="2119.15">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="2612.03" y="2077.79" rotation="-0.191137">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="2488.79" y="1641.45">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="2551.12" y="388.546">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="2680.76" y="466.667">
+   <properties>
+    <property name="hero" value="false"/>
+   </properties>
+  </object>
+  <object x="1189.94" y="1708.09">
+   <properties>
+    <property name="boss" value="true"/>
+   </properties>
+  </object>
+  <object x="303.03" y="1733.33">
+   <properties>
+    <property name="boss" value="true"/>
+   </properties>
+  </object>
+  <object x="2169.94" y="966.606">
+   <properties>
+    <property name="boss" value="true"/>
+   </properties>
+  </object>
+  <object x="3554.22" y="589.848">
+   <properties>
+    <property name="boss" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

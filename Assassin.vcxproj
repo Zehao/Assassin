@@ -139,10 +139,14 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="Classes\AnimationManager.cpp" />
     <ClCompile Include="Classes\AppDelegate.cpp" />
+    <ClCompile Include="Classes\config.cpp" />
     <ClCompile Include="Classes\Entity.cpp" />
+    <ClCompile Include="Classes\EntityLayer.cpp" />
     <ClCompile Include="Classes\HelpScene.cpp" />
     <ClCompile Include="Classes\Hero.cpp" />
-    <ClCompile Include="Classes\MapScene.cpp" />
+    <ClCompile Include="Classes\InfoLayer.cpp" />
+    <ClCompile Include="Classes\MapLayer.cpp" />
+    <ClCompile Include="Classes\MainScene.cpp" />
     <ClCompile Include="Classes\MenuScene.cpp" />
     <ClCompile Include="Classes\Monster.cpp" />
     <ClCompile Include="Classes\SceneManager.cpp" />
@@ -153,13 +157,17 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="Classes\AppDelegate.h" />
     <ClInclude Include="Classes\config.h" />
     <ClInclude Include="Classes\Entity.h" />
+    <ClInclude Include="Classes\EntityLayer.h" />
     <ClInclude Include="Classes\HelpScene.h" />
     <ClInclude Include="Classes\Hero.h" />
-    <ClInclude Include="Classes\MapScene.h" />
+    <ClInclude Include="Classes\InfoLayer.h" />
+    <ClInclude Include="Classes\MapLayer.h" />
+    <ClInclude Include="Classes\MainScene.h" />
     <ClInclude Include="Classes\MenuScene.h" />
     <ClInclude Include="Classes\Monster.h" />
     <ClInclude Include="Classes\SceneManager.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">

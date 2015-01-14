@@ -2,6 +2,7 @@
 #include "config.h"
 #include "Hero.h"
 
+
 Hero::Hero(){
 	_mp = 0;
 }
