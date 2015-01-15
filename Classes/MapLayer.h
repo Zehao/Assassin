@@ -22,6 +22,10 @@ private:
 	 Size _tileSize;
 	 int _resHeight;
 	 int _resWidth;
+
+	 int _mapHeight;
+	 int _mapWidth;
+
 public:
 	CREATE_FUNC(MapLayer);
 
@@ -29,6 +33,8 @@ public:
 	
 	TMXObjectGroup* getEntitesLayer(){ return _entityLayer; }
      bool isAccessible(const Vec2&  pointA, const Vec2& pointB);
+
+	 void setMapPosition(const Vec2& point);
 
 protected:
 	inline const Vec2& point2Tile(const Vec2& point);

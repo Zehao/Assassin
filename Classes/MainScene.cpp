@@ -1,4 +1,5 @@
 #include "MainScene.h"
+#include "config.h"
 
 
 Scene* MainScene::createScene(){
@@ -24,7 +25,12 @@ bool MainScene::init(){
 		return false;
 
 	_mapLayer = MapLayer::create();
+
+	//_mapLayer->setAnchorPoint(Vec2(0.5, 0.5));
+	//_mapLayer->setPosition(from_str<int>CONF("RESOLUTION_WIDTH") /2 , from_str<int>CONF("RESOLUTION_HEIGHT") /2 );
+
 	this->addChild(_mapLayer, LAYER_ZORDER::LAYER_MAP);
+
 
 	_infoLayer = InfoLayer::create();
 	this->addChild(_infoLayer, LAYER_INFO);
@@ -33,8 +39,6 @@ bool MainScene::init(){
 	_entityLayer = EntityLayer::create();
 	_entityLayer->setEntities(_mapLayer->getEntitesLayer());
 	this->addChild(_entityLayer, LAYER_ENTITY);
-
-
 
 	/*此层的键盘事件, Layer已经有EventListener的_keyboardListener
 	* @see Layer::setKeyboardEnabled
@@ -51,10 +55,33 @@ bool MainScene::init(){
 
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
 
+	_needMove = false;
+
+	
 
 	return true;
 }
 
+
+void MainScene::update(float delta){
+	if (_needMove == false)
+		return;
+	CCLOG("CUR POSITION:%f,%f", _delta.curPosition.x, _delta.curPosition.y);
+	CCLOG("TAR POSITION:%f,%f", _delta.targetPoint.x, _delta.targetPoint.y);
+	if (_delta.isDestination())
+	{
+		CCLOG("moved");
+		_mapLayer->setPosition(_delta.targetPoint);
+		this->unscheduleUpdate();
+		_needMove = false;
+	}
+	else{
+		_mapLayer->setPosition(_delta.getNewPos());
+		CCLOG("moving");
+	}
+	
+	
+}
 
 void MainScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event){
 	typedef EventKeyboard::KeyCode CODE;
@@ -113,9 +140,56 @@ bool MainScene::onTouchBegan(Touch *touch, Event *unused_event){
 
 	auto touchPoint = touch->getLocation();
 	auto heroPoint = _entityLayer->getHero()->getPosition();
+
+	auto mapPos = _mapLayer->getPosition();
+
 	CCLOG("%f,%f", touchPoint.x, touchPoint.y);
-	CCLOG("%f,%f", heroPoint.x, heroPoint.y);
-	_mapLayer->isAccessible(heroPoint, touchPoint);
+
+	auto p = _entityLayer->getHero()->getBoundingBox();
+	
+	_needMove = true;
+	if (touchPoint.x > p.getMaxX() ){
+		if (touchPoint.y > p.getMaxY())
+			_delta.direction = ENTITY_DIRECTION::RIGHT_UP;
+		else if (touchPoint.y < p.getMinY())
+			_delta.direction = ENTITY_DIRECTION::RIGHT_DOWN;
+		else
+			_delta.direction = ENTITY_DIRECTION::RIGHT;
+	}
+	else if (touchPoint.x <p.getMinX())
+	{
+		if (touchPoint.y > p.getMaxY())
+			_delta.direction = ENTITY_DIRECTION::LEFT_UP;
+		else if (touchPoint.y < p.getMinY())
+			_delta.direction = ENTITY_DIRECTION::LEFT_DOWN;
+		else
+			_delta.direction = ENTITY_DIRECTION::LEFT;
+	}
+	else{
+		if (touchPoint.y > p.getMaxY())
+			_delta.direction = ENTITY_DIRECTION::UP;
+		else if (touchPoint.y < p.getMinY())
+			_delta.direction = ENTITY_DIRECTION::DOWN;
+		else
+			_needMove = false;
+	}
+
+
+	CCLOG("_delta direction : %d", _delta.direction );
+
+	_delta.setPoint(mapPos, mapPos + heroPoint - touchPoint);
+
+	if (_needMove){
+		_entityLayer->getHero()->setDirection(_delta.direction);
+		this->scheduleUpdate();
+	}
+
+
+	//int centX = from_str<int>CONF("RESOLUTION_HEIGHT") / 2;
+	//int centy = from_str<int>CONF("RESOLUTION_WIDTH") / 2;
+	//_mapLayer->setPosition(centX - touchPoint.x, centy - touchPoint.y);
+
+
 	return true;
 }
 
