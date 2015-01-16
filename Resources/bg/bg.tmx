@@ -30,7 +30,7 @@
   <object x="1257.58" y="2996.97"/>
   <object x="206.061" y="2369.7">
    <properties>
-    <property name="hero" value=""/>
+    <property name="hero" value="true"/>
    </properties>
   </object>
   <object x="587.727" y="1067.64">

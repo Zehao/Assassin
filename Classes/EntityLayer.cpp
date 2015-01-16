@@ -22,15 +22,5 @@ bool EntityLayer::init(){
 
 
 void EntityLayer::setEntities (TMXObjectGroup* objects){
-	this->_entities = objects;
-	auto objs = _entities->getObjects();
-	log("---------obj size-------\n%d", _entities->getObjects().size());
-	for (int i = 0; i < objs.size(); i++){
-		auto currentObj = objs[i].asValueMap();
-		//log("%f,%f", currentObj.at("x").asFloat(), currentObj.at("y").asFloat());
-		float x = currentObj.at("x").asFloat();
-		float y = currentObj.at("y").asFloat();
-		
-	}
 
 }

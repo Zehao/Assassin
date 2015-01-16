@@ -36,6 +36,10 @@ Animate* AnimationManager::getAnimate(ANIMATION_TYPE animateType, ENTITY_DIRECTI
 		assert(direct < 4);
 		return _hero_attack.at(direct);
 		break;
+	case ANIMATION_TYPE::MONSTER: //4
+		assert(direct < 4);
+		return _monster1.at(direct);
+		break;
 	default:
 		break;
 	}
@@ -47,6 +51,7 @@ bool AnimationManager::init(){
 	_frameCache->addSpriteFramesWithFile(CONF("HERO_ATTACK_PLIST"), CONF("HERO_ATTACK_PNG"));
 	_frameCache->addSpriteFramesWithFile(CONF("HERO_RUN_PLIST"), CONF("HERO_RUN_PNG"));
 	_frameCache->addSpriteFramesWithFile(CONF("HERO_STOP_PLIST"), CONF("HERO_STOP_PNG"));
+	_frameCache->addSpriteFramesWithFile(CONF("MONSTER1_PLIST"), CONF("MONSTER1_PNG"));
 
 	for (int k = 0; k < from_str<int>(CONF("HERO_ATTACK_DIRECTIONS") ); k++){
 		Vector<SpriteFrame*> frames;
@@ -80,6 +85,19 @@ bool AnimationManager::init(){
 		}
 		_hero_stand.pushBack(Animate::create(Animation::createWithSpriteFrames(frames, 0.1, -1)));
 	}
+
+
+	for (int k = 0; k < from_str<int>(CONF("MONSTER1_DIRECTIONS")); k++){
+		Vector<SpriteFrame*> frames;
+		for (int i = 0; i < from_str<int>(CONF("MONSTER1_FRAME_NUM")); i++){
+			auto frame = _frameCache->getSpriteFrameByName(StringUtils::format("%s%02d%03d.png", CONF("MONSTER1_PREFIX").c_str(), k, i));
+			if (frame)
+				frames.pushBack(frame);
+		}
+		_monster1.pushBack(Animate::create(Animation::createWithSpriteFrames(frames, 0.08, -1)));
+	}
+
+
 
 	return true;
 

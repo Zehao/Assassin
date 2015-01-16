@@ -22,14 +22,13 @@ bool MapLayer::init(){
 	_accessLayer->setVisible(false);
 	
 	_bgLayer = _map->getLayer(CONF("MAP_TILE_BG"));
+	
 	assert(_bgLayer != nullptr);
+	_bgLayer->setVisible(true);
 
 	_entityLayer = _map->getObjectGroup(CONF("MAP_TILE_ENTITY"));
 	assert(_entityLayer != nullptr);
 
-	//_map->setAnchorPoint(Vec2(0.5, 0.5));
-	//CCLOG("%f,%f", _map->getPosition().x, _map->getPosition().y);
-	//_map->setPosition(Vec2(_resWidth/2,_resHeight/2));
 	this->addChild(_map);
 	return true;
 }
@@ -72,9 +71,33 @@ Vec2 MapLayer::getAccessPoint(const Vec2&  pointA, const Vec2& pointB){
 	return curPoint;
 }
 
+bool MapLayer:: isAccessable(const Vec2& point){
+	auto tile = point2Tile(point);
+	auto gid = _accessLayer->getTileGIDAt(tile);
+	if (!gid)
+		return false;
+	return true;
+}
+
 const Vec2& MapLayer::point2Tile(const Vec2& point){
 	
 	int x = (int)(   ( ORIGIN_POS.x  + point.x)  / _tileSize.width);
 	int y = (int)((_mapHeight - ORIGIN_POS.y - point.y) / _tileSize.height);
 	return Vec2(x, y);
+}
+
+ACCESS_TYPE MapLayer::getAccessType(const Vec2& point){
+	auto tile = point2Tile(point);
+	auto gid = _accessLayer->getTileGIDAt(tile);
+	if (gid == 0)
+		return ACCESS_TYPE::ACC_BLOCK;
+	Value properties = _map->getPropertiesForGID(gid);
+	auto accStr = properties.asValueMap().at("acc").asString();
+	if (accStr.compare("1") == 0){
+		return ACCESS_TYPE::ACC_FULL;
+	}
+	else if (accStr.compare("2") == 0)
+	{
+		return ACCESS_TYPE::ACC_HALF;
+	}
 }

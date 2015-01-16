@@ -36,6 +36,10 @@ public:
 
 	 void setMapPosition(const Vec2& point);
 
+	 bool isAccessable(const Vec2& point);
+	 
+	 ACCESS_TYPE getAccessType(const Vec2& point);
+
 protected:
 	inline const Vec2& point2Tile(const Vec2& point);
 };

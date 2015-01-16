@@ -24,25 +24,7 @@ bool MainScene::init(){
 	if (!CCLayer::init())
 		return false;
 
-	//Map
-	_map = TMXTiledMap::create(CONF("MAP_TILE_PATH"));
-	assert(_map != nullptr);
-
-	_tileSize = _map->getTileSize();
-	_resHeight = from_str<int>CONF("RESOLUTION_HEIGHT");
-	_resWidth = from_str<int>CONF("RESOLUTION_WIDTH");
-	_mapHeight = from_str<int>CONF("MAP_HEIGHT");
-	_mapWidth = from_str<int>CONF("MAP_WIDTH");
-
-	_accessLayer = _map->getLayer(CONF("MAP_TILE_ACCESS"));
-	assert(_accessLayer != nullptr);
-	_accessLayer->setVisible(false);
-
-	_bgLayer = _map->getLayer(CONF("MAP_TILE_BG"));
-	assert(_bgLayer != nullptr);
-
-	_entityLayer = _map->getObjectGroup(CONF("MAP_TILE_ENTITY"));
-	assert(_entityLayer != nullptr);
+	_map = MapLayer::create();
 
 	this->addChild(_map, LAYER_ZORDER::LAYER_MAP);
 
@@ -50,18 +32,8 @@ bool MainScene::init(){
 	_infoLayer = InfoLayer::create();
 	this->addChild(_infoLayer, LAYER_INFO);
 
-
-	//Hero and monsters ,need to init by _entityLayer's objects position;
-	_hero = Entity::create(CONF("HERO_STATIC_TEXTURE"));
-	_hero->setDirection(ENTITY_DIRECTION::RIGHT_DOWN);
-
-	_hero->setPosition(WIN_SIZE.width / 2 + ORIGIN_POS.x, WIN_SIZE.height / 2 + ORIGIN_POS.y + 250);
-	//_hero->setPosition(WIN_SIZE.width / 2 , WIN_SIZE.height / 2 );
-	_hero->setScale(1.4);
-
-	_hero->runAnimation(ANIMATION_TYPE::HERO_STAND);
-	this->addChild(_hero, LAYER_ENTITY);
-
+	//Entities
+	setEntities(_map->_entityLayer);
 
 	/*此层的键盘事件, Layer已经有EventListener的_keyboardListener
 	* @see Layer::setKeyboardEnabled
@@ -79,8 +51,6 @@ bool MainScene::init(){
 	_needMove = false;
 
 	this->setViewpointCenter(_hero->getPosition());
-
-	
 
 	return true;
 }
@@ -103,7 +73,15 @@ void MainScene::update(float delta){
 		_needMove = false;
 	}
 	else{
-		_hero->setPosition(_delta.getNewPos());
+		auto tp = _delta.getNewPos();
+		if (_map->isAccessable(tp))
+			_hero->setPosition(tp);
+		else{
+			_needMove = false;
+			_hero->stopAllActions();
+			_hero->runAnimation(ANIMATION_TYPE::HERO_STAND);
+		}
+			
 		CCLOG("moving");
 	}
 	setViewpointCenter(_hero->getPosition());
@@ -161,25 +139,47 @@ void MainScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event){
 
 void MainScene::setViewpointCenter(const Vec2& point){
 	
-	double x = std::max(point.x, (float)_resWidth / 2);
-	double y = std::max(point.y, (float)_resHeight / 2);
-	x = std::min(x, (float)_mapWidth - _resWidth / 2.0);
-	y = std::min(y, (float)_mapHeight - _resHeight / 2.0);
+	double x = std::max(point.x, (float)_map->_resWidth / 2);
+	double y = std::max(point.y, (float)_map->_resHeight / 2);
+	x = std::min(x, (float)_map->_mapWidth - _map->_resWidth / 2.0);
+	y = std::min(y, (float)_map->_mapHeight - _map->_resHeight / 2.0);
 
-	Vec2 centerOfView = Vec2(_resWidth / 2, _resHeight / 2);
+	Vec2 centerOfView = Vec2(_map->_resWidth / 2, _map->_resHeight / 2);
 	
 	Vec2 actualPoint(x, y);
 	this->setPosition(centerOfView - actualPoint);
 }
 
+void MainScene:: setEntities(TMXObjectGroup* layer){
+	auto objs = layer->getObjects();
+	log("---------obj size-------\n%d", layer->getObjects().size());
+	for (int i = 0; i < objs.size(); i++){
+		auto currentObj = objs[i].asValueMap();
+		float x = currentObj.at("x").asFloat();
+		float y = currentObj.at("y").asFloat();
+		auto heroKey = currentObj.at(string("hero")).asString();
+		if (heroKey == "true")
+		{
+			_hero = new Hero();
+			_hero->setScale(1.4);
+			_hero->runAnimation(ANIMATION_TYPE::HERO_STAND);
+			_hero->setPosition(x, y);
+			this->addChild(_hero, LAYER_ENTITY);
+		}
+		else if (heroKey == "false")
+		{
+			auto monster = new Monster();
+			monster->setPosition(x, y);
+			monster->runAnimation(ANIMATION_TYPE::MONSTER);
+			this->addChild(monster);
+			_monsters.pushBack(monster);
+		}
+		//log("%f,%f", currentObj.at("x").asFloat(), currentObj.at("y").asFloat());
 
 
-//
-//bool MainScene::onTouchBegan(Touch *touch, Event *unused_event){
-//	auto touchPoint = touch->getLocation();
-//	CCLOG("to map position:%f,%f", touchPoint.x, touchPoint.y);
-//	return true;
-//}
+	}
+
+}
 
 
 bool MainScene::onTouchBegan(Touch *touch, Event *unused_event){
@@ -260,7 +260,6 @@ bool MainScene::onTouchBegan(Touch *touch, Event *unused_event){
 }
 
 void MainScene::onTouchMoved(Touch *touch, Event *unused_event){
-
 }
 
 void MainScene::onTouchEnded(Touch *touch, Event *unused_event){

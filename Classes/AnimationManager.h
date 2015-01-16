@@ -19,7 +19,7 @@ private:
 	Vector<Animate*> _hero_stand;  //8
 	Vector<Animate*> _hero_run;     //8
 	Vector<Animate*> _hero_attack; //4
-
+	Vector<Animate*> _monster1;
 	/*
 	SpriteFrame* _hero_stand_frame;
 	SpriteFrame* _hero_run_frame;

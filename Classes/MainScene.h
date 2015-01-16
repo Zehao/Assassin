@@ -6,6 +6,7 @@
 #include "cocos2d.h"
 #include "Hero.h"
 #include "Monster.h"
+#include "MapLayer.h"
 
 
 enum LAYER_ZORDER{
@@ -14,7 +15,7 @@ enum LAYER_ZORDER{
 	LAYER_ENTITY
 };
 
-class DeltaPoint
+class MoveInfo
 {
 public:
 	Vec2 targetPoint;
@@ -24,7 +25,7 @@ public:
 	float deltaY;
 	ENTITY_DIRECTION direction;
 public:
-	DeltaPoint():speed (3){}
+	MoveInfo() :speed(3){}
 	void setPoint(const Vec2& cur, const Vec2& tar) {
 		curPosition = cur;
 		targetPoint = tar;
@@ -64,19 +65,11 @@ private:
 	Vector<Entity*> _monsters;
 
 private:
-	TMXLayer* _accessLayer;
-	TMXLayer* _bgLayer;
-	TMXTiledMap* _map;
-	TMXObjectGroup* _entityLayer;
-	Size _tileSize;
-	int _resHeight;
-	int _resWidth;
-	int _mapHeight;
-	int _mapWidth;
+	MapLayer* _map;
 
 private:
 	bool _needMove;
-	DeltaPoint _delta;
+	MoveInfo _delta;
 public:
 	CREATE_FUNC(MainScene);
 	static Scene* createScene();
@@ -84,7 +77,13 @@ public:
 
 	void setViewpointCenter(const Vec2& point);
 
+	void setEntities(TMXObjectGroup* layer);
+
+
+
 	virtual void update(float delta);
+
+
 
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
