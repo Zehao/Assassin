@@ -57,7 +57,7 @@ bool AnimationManager::init(){
 				frames.pushBack(frame);
 		}
 		
-		_hero_attack.pushBack( Animate::create(Animation::createWithSpriteFrames(frames, 0.05, -1) ) );
+		_hero_attack.pushBack( Animate::create(Animation::createWithSpriteFrames(frames, 0.08, -1) ) );
 	}
 
 
@@ -68,7 +68,7 @@ bool AnimationManager::init(){
 			if (frame)
 				frames.pushBack(frame);
 		}
-		_hero_run.pushBack(Animate::create(Animation::createWithSpriteFrames(frames, 0.05, -1)));
+		_hero_run.pushBack(Animate::create(Animation::createWithSpriteFrames(frames, 0.08, -1)));
 	}
 
 	for (int k = 0; k < from_str<int>(CONF("HERO_STOP_DIRECTIONS")) ; k++){
@@ -78,7 +78,7 @@ bool AnimationManager::init(){
 			if (frame)
 				frames.pushBack(frame);
 		}
-		_hero_stand.pushBack(Animate::create(Animation::createWithSpriteFrames(frames, 0.05, -1)));
+		_hero_stand.pushBack(Animate::create(Animation::createWithSpriteFrames(frames, 0.1, -1)));
 	}
 
 	return true;

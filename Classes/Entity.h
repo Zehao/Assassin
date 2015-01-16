@@ -22,6 +22,7 @@ public:
 
 	void setDirection(ENTITY_DIRECTION direction);
 	void runAnimation(ANIMATION_TYPE type);
+	void stopAnimation();
 
 public:
 	CREATE_FUNC(Entity);

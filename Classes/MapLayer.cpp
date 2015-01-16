@@ -40,21 +40,36 @@ void MapLayer::setMapPosition(const Vec2& point){
 	this->_map->setPosition(point);
 }
 
-bool MapLayer::isAccessible(const Vec2&  pointA, const Vec2& pointB){
-	Vec2 v1 = point2Tile(pointA);
-	Vec2 v2 = point2Tile(pointB);
+/*
+	pointA 起点
+	pointB 目标点
+	返回应该到达的点
+*/
+Vec2 MapLayer::getAccessPoint(const Vec2&  pointA, const Vec2& pointB){
 
+	float _delta = _tileSize.width / 2;
 
+	float _len = sqrt((pointA.x - pointB.x)*(pointA.x - pointB.x) + (pointA.y - pointB.y)*(pointA.y - pointB.y));
+	double theta = atan(fabs((pointB.y - pointA.y) / (pointB.x - pointA.x)));
 
-	if (1){
-		Value properties = _map->getPropertiesForGID(_accessLayer->getTileGIDAt(v2));
-		CCLOG("acc property:%s", properties.asValueMap().at("acc").asString().c_str());
+	float deltaX = _delta*cos(theta);
+	if (pointB.x < pointA.x)
+		deltaX = -deltaX;
+	float deltaY = _delta*sin(theta);
+	if (pointB.y < pointA.y)
+		deltaY = -deltaY;
+	float dis = 0; 
+	Vec2 curPoint(pointA);
+	while (_accessLayer->getTileGIDAt(point2Tile(curPoint)) && dis <_len)
+	{
+		curPoint.x += deltaX;
+		curPoint.y += deltaY;
+		//Value properties = _map->getPropertiesForGID(tmp);
+		//properties.asValueMap().at("acc").asString() == ""
+		dis += _delta;
 	}
-	else{
-		CCLOG("GID == 0 ");
-	}
-	
-	return true;
+ 
+	return curPoint;
 }
 
 const Vec2& MapLayer::point2Tile(const Vec2& point){

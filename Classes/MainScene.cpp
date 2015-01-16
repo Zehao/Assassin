@@ -72,6 +72,8 @@ void MainScene::update(float delta){
 	{
 		CCLOG("moved");
 		_mapLayer->setPosition(_delta.targetPoint);
+		_entityLayer->getHero()->stopAllActions();
+		_entityLayer->getHero()->runAnimation(ANIMATION_TYPE::HERO_STAND);
 		this->unscheduleUpdate();
 		_needMove = false;
 	}
@@ -137,9 +139,9 @@ bool MainScene::onTouchBegan(Touch *touch, Event *unused_event){
 	//CCLOG("%f,%f", (touch->getLocationInView()).x, touch->getLocationInView().y);
 	//Vec2 v = Director::getInstance()->convertToGL(touch->getLocationInView());
 	//CCLOG("%f,%f", v.x ,v.y);
-
+	auto _hero = _entityLayer->getHero();
 	auto touchPoint = touch->getLocation();
-	auto heroPoint = _entityLayer->getHero()->getPosition();
+	auto heroPoint = _hero->getPosition();
 
 	auto mapPos = _mapLayer->getPosition();
 
@@ -177,10 +179,21 @@ bool MainScene::onTouchBegan(Touch *touch, Event *unused_event){
 
 	CCLOG("_delta direction : %d", _delta.direction );
 
-	_delta.setPoint(mapPos, mapPos + heroPoint - touchPoint);
+	auto _targetPos = mapPos + heroPoint - touchPoint;
+	
+	//_targetPos = _mapLayer->getAccessPoint(mapPos, _targetPos);
 
+	Vec2 p1 = _mapLayer->convertToNodeSpace(mapPos);
+	Vec2 p2 = _mapLayer->convertToNodeSpace(_targetPos);
+	CCLOG("map point : %f, %f",p1.x,p1.y );
+	CCLOG("map point : %f, %f", p2.x, p2.y);
+	_delta.setPoint(mapPos, _targetPos);
+
+	
 	if (_needMove){
 		_entityLayer->getHero()->setDirection(_delta.direction);
+		_hero->stopAllActions();
+		_hero->runAnimation(ANIMATION_TYPE::HERO_RUN);
 		this->scheduleUpdate();
 	}
 

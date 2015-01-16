@@ -32,7 +32,7 @@ public:
 	virtual bool init() override;
 	
 	TMXObjectGroup* getEntitesLayer(){ return _entityLayer; }
-     bool isAccessible(const Vec2&  pointA, const Vec2& pointB);
+     Vec2 getAccessPoint(const Vec2&  pointA, const Vec2& pointB);
 
 	 void setMapPosition(const Vec2& point);
 

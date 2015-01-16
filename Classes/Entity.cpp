@@ -35,3 +35,7 @@ Entity*  Entity::create(const string& file){
 	CC_SAFE_DELETE(entity);
 	return nullptr;
 }
+
+void Entity::stopAnimation(){
+	this->stopAllActions();
+}

@@ -22,26 +22,24 @@ public:
 	float deltaY;
 	ENTITY_DIRECTION direction;
 public:
-	DeltaPoint(Vec2 cur, Vec2 tar) :curPosition(cur), targetPoint(tar), speed(10){
-		deltaX = tar.x - cur.x;
-		deltaY = tar.y - cur.y;
-	}
 
 	void setPoint(const Vec2& cur, const Vec2& tar) {
 		curPosition = cur;
 		targetPoint = tar;
-		speed = 10;
+		speed = 4;
 
-
-
-		double theta = atan((tar.y - cur.y) / (tar.x - cur.x));
+		double theta = atan(fabs((tar.y - cur.y) / (tar.x - cur.x)));
 
 		deltaX = speed*cos(theta);
+		if (tar.x < cur.x)
+			deltaX = -deltaX;
 		deltaY = speed*sin(theta);
+		if (tar.y < cur.y)
+			deltaY = -deltaY;
 		
 	}
 	bool isDestination(){
-		if (fabs(curPosition.x - targetPoint.x)<= 2 && fabs(curPosition.y - targetPoint.y) <=2)
+		if ((curPosition.x - targetPoint.x)*(curPosition.x - targetPoint.x) + (curPosition.y - targetPoint.y)*(curPosition.y - targetPoint.y)  <= speed*speed )
 		{
 			return true;
 		}
