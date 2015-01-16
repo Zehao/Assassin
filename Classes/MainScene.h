@@ -24,6 +24,7 @@ public:
 	float deltaX;
 	float deltaY;
 	ENTITY_DIRECTION direction;
+	Size tileSize;
 public:
 	MoveInfo() :speed(3){}
 	void setPoint(const Vec2& cur, const Vec2& tar) {
@@ -55,6 +56,13 @@ public:
 		return curPosition;
 	}
 
+	const Vec2 checkPoint(){
+		float x, y;
+		float half = tileSize.width / 2;
+		x = deltaX < 0 ? curPosition.x - half : curPosition.x + half;
+		y = deltaY < 0 ? curPosition.y - half : curPosition.y + half;
+		return Vec2(x, y);
+	}
 
 } ;
 

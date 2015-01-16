@@ -21,8 +21,13 @@ void Entity::setDirection(ENTITY_DIRECTION direction){
 }
 
 
+/************************************************************************/
+/*坑，多个对象不能 同时 共享同一个Animate对象                                                          
+/************************************************************************/
 void Entity::runAnimation(ANIMATION_TYPE type){
-	this->runAction(AnimationManager::getInstance()->getAnimate(type, this->_direction));
+	Animation* animation = AnimationManager::getInstance()->getAnimate(type, this->_direction)->getAnimation();
+
+	this->runAction(Animate::create(animation));
 }
 
 

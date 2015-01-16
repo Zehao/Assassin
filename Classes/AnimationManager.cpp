@@ -91,8 +91,11 @@ bool AnimationManager::init(){
 		Vector<SpriteFrame*> frames;
 		for (int i = 0; i < from_str<int>(CONF("MONSTER1_FRAME_NUM")); i++){
 			auto frame = _frameCache->getSpriteFrameByName(StringUtils::format("%s%02d%03d.png", CONF("MONSTER1_PREFIX").c_str(), k, i));
-			if (frame)
+			if (frame){
 				frames.pushBack(frame);
+				//log("%s", StringUtils::format("%s%02d%03d.png", CONF("MONSTER1_PREFIX").c_str(), k, i).c_str());
+			}
+				
 		}
 		_monster1.pushBack(Animate::create(Animation::createWithSpriteFrames(frames, 0.08, -1)));
 	}

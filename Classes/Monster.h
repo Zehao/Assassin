@@ -9,9 +9,6 @@ class Monster : public Entity{
 private:
 
 public:
-	//void runAnimation(ANIMATION_TYPE type) override;
-
-public:
 	//CREATE_FUNC(Hero);
 	Monster();
 	virtual bool init() override;

@@ -74,7 +74,7 @@ void MainScene::update(float delta){
 	}
 	else{
 		auto tp = _delta.getNewPos();
-		if (_map->isAccessable(tp))
+		if (_map->isAccessable(_delta.checkPoint()))
 			_hero->setPosition(tp);
 		else{
 			_needMove = false;
@@ -155,10 +155,11 @@ void MainScene:: setEntities(TMXObjectGroup* layer){
 	log("---------obj size-------\n%d", layer->getObjects().size());
 	for (int i = 0; i < objs.size(); i++){
 		auto currentObj = objs[i].asValueMap();
+		
 		float x = currentObj.at("x").asFloat();
 		float y = currentObj.at("y").asFloat();
-		auto heroKey = currentObj.at(string("hero")).asString();
-		if (heroKey == "true")
+		auto heroKey = currentObj.at(string("type")).asString();
+		if (heroKey == "hero")
 		{
 			_hero = new Hero();
 			_hero->setScale(1.4);
@@ -166,18 +167,23 @@ void MainScene:: setEntities(TMXObjectGroup* layer){
 			_hero->setPosition(x, y);
 			this->addChild(_hero, LAYER_ENTITY);
 		}
-		else if (heroKey == "false")
+		else if (heroKey == "m1")
 		{
 			auto monster = new Monster();
 			monster->setPosition(x, y);
+			monster->setScale(1.4);
 			monster->runAnimation(ANIMATION_TYPE::MONSTER);
-			this->addChild(monster);
+			this->addChild(monster, LAYER_ENTITY);
 			_monsters.pushBack(monster);
+		}
+		else{
+			//monster2
 		}
 		//log("%f,%f", currentObj.at("x").asFloat(), currentObj.at("y").asFloat());
 
 
 	}
+	CCLOG("");
 
 }
 
@@ -224,6 +230,7 @@ bool MainScene::onTouchBegan(Touch *touch, Event *unused_event){
 
 	if (_needMove){
 		_delta.setPoint(_hero->getPosition(), touchPoint);
+		_delta.tileSize = _map->_tileSize;
 		_hero->setDirection(_delta.direction);
 		_hero->stopAllActions();
 		_hero->runAnimation(ANIMATION_TYPE::HERO_RUN);
