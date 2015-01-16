@@ -12,7 +12,6 @@ class Entity : public cocos2d::Sprite{
 public:
 
 protected:
-	Vec2 _position;
 	int _hp;
 	bool _isAlive;
 	int _damage;

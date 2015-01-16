@@ -14,7 +14,7 @@ USING_NS_CC;
 地图层,置于场景最下面
 */
 class MapLayer : public Layer{
-private:
+public:
 	 TMXLayer* _accessLayer;
 	 TMXLayer* _bgLayer;
 	 TMXTiledMap* _map;

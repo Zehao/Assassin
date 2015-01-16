@@ -2,9 +2,11 @@
 #ifndef __MAINSCENE_H__
 #define __MAINSCENE_H__
 
-#include "EntityLayer.h"
 #include "InfoLayer.h"
-#include "MapLayer.h"
+#include "cocos2d.h"
+#include "Hero.h"
+#include "Monster.h"
+
 
 enum LAYER_ZORDER{
 	LAYER_MAP=1,
@@ -22,11 +24,11 @@ public:
 	float deltaY;
 	ENTITY_DIRECTION direction;
 public:
-
+	DeltaPoint():speed (3){}
 	void setPoint(const Vec2& cur, const Vec2& tar) {
 		curPosition = cur;
 		targetPoint = tar;
-		speed = 4;
+		speed = 3;
 
 		double theta = atan(fabs((tar.y - cur.y) / (tar.x - cur.x)));
 
@@ -52,14 +54,25 @@ public:
 		return curPosition;
 	}
 
-	DeltaPoint(){}
+
 } ;
 
 class MainScene : public Layer{
 private:
-	EntityLayer* _entityLayer;
-	MapLayer* _mapLayer;
 	InfoLayer* _infoLayer;
+	Entity*_hero;
+	Vector<Entity*> _monsters;
+
+private:
+	TMXLayer* _accessLayer;
+	TMXLayer* _bgLayer;
+	TMXTiledMap* _map;
+	TMXObjectGroup* _entityLayer;
+	Size _tileSize;
+	int _resHeight;
+	int _resWidth;
+	int _mapHeight;
+	int _mapWidth;
 
 private:
 	bool _needMove;
@@ -69,6 +82,7 @@ public:
 	static Scene* createScene();
 	virtual bool init() override;
 
+	void setViewpointCenter(const Vec2& point);
 
 	virtual void update(float delta);
 
