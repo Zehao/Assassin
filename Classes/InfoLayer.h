@@ -3,8 +3,10 @@
 #define __INFOLAYER_H__
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "Entity.h"
 #include "AnimationManager.h"
+#include "Hero.h"
+#include "Monster.h"
+
 using namespace ui;
 USING_NS_CC;
 
@@ -21,6 +23,14 @@ private:
 
 public:
 	CREATE_FUNC(InfoLayer);
+	virtual bool init() override;
+
+	virtual void update(float delta) override;
+
+public:
+	void setHero(Hero *hero);
+	void setMonster(Monster* monster);
+
 };
 
 #endif

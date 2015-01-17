@@ -21,7 +21,6 @@ private:
 	Vector<Entity*> _monsters;
 	virtual bool init() override;
 
-	
 
 private:
 	TMXObjectGroup* _entities;
