@@ -9,13 +9,14 @@ function AnimationManager:new(o)
 	return o
 end
 
-function AnimationManager:Instance()
+function AnimationManager:getInstance()
     if self.instance == nil then
         self.instance = self:new()
         self.hero_attack = {}
         self.hero_run = {}
         self.hero_stand = {}
         self.monster1 = {}
+        self:initAnimationManager()
      end
      return self.instance
 end

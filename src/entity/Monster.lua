@@ -14,7 +14,6 @@ end
 
 
 function Monster.create()
-	local monster = Monster.new(CONF.MONSTER1_STATIC_TEXTURE)
-	return monster
+    return  Monster.new(CONF.MONSTER1_STATIC_TEXTURE)
 end
 

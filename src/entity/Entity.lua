@@ -1,6 +1,6 @@
 require("types/Types")
 require("ParamConfig")
-
+require("managers/AnimationManager")
 Entity = class("Entity",function(filepath)
     return cc.Sprite:create(filepath)
 end)
@@ -26,3 +26,7 @@ function Entity:stopAnimation()
     Entity:stopAllActions()
 end
 
+function Entity:runAnimation(animation_type)
+    local animation = AnimationManager:getInstance():getAnimate(animation_type , self.direction):getAnimation()
+    self:runAction(cc.Animate:create(animation))
+end

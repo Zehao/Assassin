@@ -4,9 +4,8 @@ cc.FileUtils:getInstance():addSearchPath("res")
 
 -- CC_USE_DEPRECATED_API = true
 require "cocos.init"
-require "ParamConfig"
-require("entity/Hero")
-
+require("ParamConfig")
+MainScene = require("MainScene")
 -- cclog
 local cclog = function(...)
     print(string.format(...))
@@ -35,20 +34,17 @@ local function main()
 
     --set FPS. the default value is 1.0/60 if you don't call this
     director:setAnimationInterval(1.0 / 60)
+    cc.Director:getInstance():getOpenGLView():setFrameSize(CONF.FRAME_WIDTH,CONF.FRAME_HEIGHT)
+    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(CONF.RESOLUTION_WIDTH, CONF.RESOLUTION_HEIGHT, 0)
     
-    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
-    
+
     --create scene 
-    local scene = require("GameScene")
-    local gameScene = scene.create()
-    
-    
-    local hero = Hero.create()
+    local scene = MainScene.create()
     
     if cc.Director:getInstance():getRunningScene() then
-        cc.Director:getInstance():replaceScene(gameScene)
+        cc.Director:getInstance():replaceScene(scene)
     else
-        cc.Director:getInstance():runWithScene(gameScene)
+        cc.Director:getInstance():runWithScene(scene)
     end
 
 end

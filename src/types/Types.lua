@@ -1,4 +1,6 @@
 
+
+
 -- 方向
 ENTITY_DIRECTION =
     {   RIGHT_DOWN=0,

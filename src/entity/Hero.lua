@@ -16,7 +16,6 @@ function Hero:ctor()
 end
 
 function Hero.create()
-    local hero = Hero.new(CONF.HERO_STATIC_TEXTURE)
-    return hero
+    return Hero.new(CONF.HERO_STATIC_TEXTURE)
 end
 
