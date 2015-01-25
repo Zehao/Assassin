@@ -13,17 +13,21 @@ MoveInfo.direction = ENTITY_DIRECTION.RIGHT_DOWN
 MoveInfo.tileSize = cc.size(0,0)
 
 
+function MoveInfo:ctor()
+
+end
+
 function MoveInfo:setPoint(cur,tar)
 	self.curPosition = cur
 	self.targetPoint = tar
-	local theta = math.abs((tar.y - cur.y) / (tar.x - cur.x) )
+	local theta = math.atan(math.abs((tar.y - cur.y) / (tar.x - cur.x) ) )
 	
 	self.deltaX = self.speed * math.cos(theta)
 	if tar.x < cur.x then 
 	   self.deltaX = - self.deltaX 
 	end
 	
-	self.deltaY = self.speed * math.cos(theta)
+	self.deltaY = self.speed * math.sin(theta)
     if tar.y < cur.y then 
         self.deltaY = - self.deltaY 
     end

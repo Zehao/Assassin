@@ -3,23 +3,23 @@
 
 -- 方向
 ENTITY_DIRECTION =
-    {   RIGHT_DOWN=0,
-        LEFT_DOWN=1,
-        LEFT_UP=2,
-        RIGHT_UP=3,
-        DOWN=4,
-        LEFT=5,
-        UP=6,
-        RIGHT=7
+    {   RIGHT_DOWN=1,
+        LEFT_DOWN=2,
+        LEFT_UP=3,
+        RIGHT_UP=4,
+        DOWN=5,
+        LEFT=6,
+        UP=7,
+        RIGHT=8
      }
 
      
 --动画类型
 ANIMATION_TYPE = {
-    HERO_RUN=0,
-    HERO_STAND=1,
-    HERO_ATTACK=2,
-    MONSTER=3
+    HERO_RUN=1,
+    HERO_STAND=2,
+    HERO_ATTACK=3,
+    MONSTER=4
 }
 
 --实体状态

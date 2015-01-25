@@ -1,4 +1,3 @@
-
 --window
 CONF = {
 FRAME_HEIGHT =  600 ,

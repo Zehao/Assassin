@@ -27,6 +27,7 @@ function Entity:stopAnimation()
 end
 
 function Entity:runAnimation(animation_type)
-    local animation = AnimationManager:getInstance():getAnimate(animation_type , self.direction):getAnimation()
+    local animation = AnimationManager:getInstance():getAnimation(animation_type , self.direction)
+    print(animation , animation_type , self.direction)
     self:runAction(cc.Animate:create(animation))
 end
