@@ -19,7 +19,8 @@ ANIMATION_TYPE = {
     HERO_RUN=1,
     HERO_STAND=2,
     HERO_ATTACK=3,
-    MONSTER=4
+    MONSTER=4,
+    WEAPON=5,
 }
 
 --实体状态

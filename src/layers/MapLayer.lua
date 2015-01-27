@@ -33,11 +33,12 @@ function MapLayer:ctor()
     self:setEntities()
     self.heroNeedMove = false
     self.moveInfo = MoveInfo.new()
+    self.infoLayer=nil
     self:setViewPointCenter(cc.p(self.hero:getPosition()))
     self:registerTouchEvent()
 end
 
-
+--注册touch事件
 function MapLayer:registerTouchEvent()
     local dispatcher = cc.Director:getInstance():getEventDispatcher()
     local listener = cc.EventListenerTouchOneByOne:create()
@@ -49,7 +50,7 @@ function MapLayer:registerTouchEvent()
             return
         end
         if self.moveInfo:isDestination() then
-            print("MOVED")
+            --print("MOVED")
             self.hero:setPosition(self.moveInfo.targetPoint)
             self.hero:stopAllActions()
             self.hero:runAnimation(ANIMATION_TYPE.HERO_STAND)
@@ -57,7 +58,7 @@ function MapLayer:registerTouchEvent()
             self.heroNeedMove = false
         else
             local pos =  self.moveInfo:getNewPos()
-            print(string.format("CURRENT POSITION:%f,%f . TARGET POSITION:%f,%f " , pos.x , pos.y, self.moveInfo.targetPoint.x ,  self.moveInfo.targetPoint.y))
+            --print(string.format("CURRENT POSITION:%f,%f . TARGET POSITION:%f,%f " , pos.x , pos.y, self.moveInfo.targetPoint.x ,  self.moveInfo.targetPoint.y))
             if self:isAccessable(self.moveInfo:checkPoint()) then
                 self.hero:setPosition(pos)
             else
@@ -116,15 +117,16 @@ function MapLayer:registerTouchEvent()
         end
         return true
     end
+
     listener:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN)
     --listener:registerScriptHandler(onTouchMoved, cc.Handler.EVENT_TOUCH_MOVED)
     --listener:registerScriptHandler(onTouchEnded, cc.Handler.EVENT_TOUCH_ENDED)
-    cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener,self)
+    dispatcher:addEventListenerWithSceneGraphPriority(listener,self)
 end
 
 
 
-
+--设置英雄和怪物
 function MapLayer:setEntities()
     
     local objs = self.entityLayer:getObjects()
@@ -162,7 +164,7 @@ function MapLayer:setEntities()
     
 end
 
-
+--设置视点
 function MapLayer:setViewPointCenter(point)
     --print(string.format("setViewPointCenter:%f,%f",point.x ,point.y))
     local resW =  CONF.RESOLUTION_WIDTH / 2
@@ -186,7 +188,7 @@ end
 function MapLayer:isAccessable(point)
     local tile = self:point2Tile(point)
     local gid = self.accessLayer:getTileGIDAt(tile)
-    print(string.format("current tile:%d,%d,gid:%d",tile.x,tile.y,gid))
+    --print(string.format("current tile:%d,%d,gid:%d",tile.x,tile.y,gid))
     if gid ~= 0 then 
         return true
     end
@@ -198,3 +200,10 @@ function MapLayer:point2Tile(point)
     local y = math.floor( (CONF.MAP_HEIGHT - point.y) / self.tileSize.height)
     return cc.p(x,y)
 end
+
+
+function MapLayer:setInfos(InfoLayer)
+	self.infoLayer = InfoLayer
+end
+
+

@@ -11,6 +11,8 @@ Entity.__index = Entity
 function Entity:ctor()
     self.direction = ENTITY_DIRECTION.RIGHT_DOWN
     self.isAlive = true
+    self.isAttacking = false
+    self.hp=0
 end
 
 
@@ -28,6 +30,14 @@ end
 
 function Entity:runAnimation(animation_type)
     local animation = AnimationManager:getInstance():getAnimation(animation_type , self.direction)
-    print(animation , animation_type , self.direction)
+    --print(animation , animation_type , self.direction)
     self:runAction(cc.Animate:create(animation))
+end
+
+function Entity:setHP(value)
+    self.hp = value
+end
+
+function Entity:getHP()
+	return self.hp
 end

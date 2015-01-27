@@ -12,8 +12,10 @@ function MainScene.create()
     
     local mapLayer = MapLayer.new()
     scene:addChild(mapLayer,LAYER_ZORDER.MAP )
-    --local infoLayer = InfoLayer:new()
-    --scene:addChild(infoLayer, LAYER_ZORDER.INFO)
+    local infoLayer = InfoLayer:new()
+    scene:addChild(infoLayer, LAYER_ZORDER.INFO)
+    
+    mapLayer:setInfos(infoLayer)
 
     return scene
 end

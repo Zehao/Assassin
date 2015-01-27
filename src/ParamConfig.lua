@@ -42,6 +42,13 @@ HERO_DAMAGE = 50,
 HERO_DAMAGE_SKILL1 = 100,
 HERO_DAMAGE_SKILL2 = 150,
 
+--weapon
+WEAPON_PLIST = "weapons/weapon_1400.plist",
+WEAPON_PNG = "weapons/weapon_1400.png",
+WEAPON_PREFIX = "weapons/weapon_14000_",
+WEAPON_STATIC = "weapons/0012-494dc152-00000.png",
+WEAPON_FRAME_NUM = 8,
+WEAPON_DIRECTIONS = 8,
 
 --monster
 
@@ -54,5 +61,10 @@ MONSTER1_FRAME_NUM = 7,
 
 MONSTER1_HP = 300,
 MONSTER1_DAMAGE=20,
+
+
+--ui
+UI_HEAD_JSON = "ui/head/hpmp0.ExportJson",
+UI_MONSTER_JSON="ui/MonsterHP/MonsterHP.ExportJson",
 
 }
