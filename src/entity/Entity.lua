@@ -15,11 +15,34 @@ function Entity:ctor()
     self.hp=0
     self.moveInfo = nil
     self.entitState = ENTITY_STATE.STATE_STAND
+    
+    local function update()
+        if self.isAttacking == false then return end
+    end
+    
+    --self:scheduleUpdateWithPriorityLua(update, 0)  
+
 end
 
 
 function Entity:attack(target)
-    target.hp = target.hp - self.damage
+    if self.isAttacking then 
+        return 
+    end
+    local function attackInterval(delta)
+        print("hero attack interval")
+--        target.hp = target.hp - self.damage
+--        if target.hp <= 0 then 
+--            target.hp = 0 
+--            target.isAlive = false
+--            self:getParent():removeEntity(target)
+--            self.isAttacking = false
+--            cc.Director:getInstance():getScheduler():unscheduleScriptEntry(self.scheduler)
+--            
+--        end
+--        
+    end
+    self.scheduler = cc.Director:getInstance():getScheduler():scheduleScriptFunc(attackInterval,2,false)
 end
 
 function Entity:setDirection(direct)

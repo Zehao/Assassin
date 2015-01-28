@@ -19,6 +19,11 @@ function Hero:ctor()
     --need to be done for weapon
     self.weapon:setPosition(cc.p(30,25))
     self:addChild(self.weapon )
+    
+    local function update(delta)
+        print("hero update")
+    end
+    --
 end
 
 function Hero.create()

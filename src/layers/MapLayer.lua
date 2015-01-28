@@ -39,6 +39,25 @@ function MapLayer:ctor()
     --update per frame
     local function update(delta)
         self:setViewPointCenter(cc.p(self.hero:getPosition()))
+        local monster = self:meetMonster()
+        if monster then
+            --self.hero
+            --print("meet",delta, monster:getPosition())
+            if self.infoLayer.monster == nil then 
+                self.infoLayer:setMonster(monster)
+                self.infoLayer:setMonsterWidgetVisibility(true)
+            end
+            if self.hero.isAlive==true and (self.hero.isAttacking == false) then
+                self.hero:attack(monster)
+            --monster:attack(self.hero)
+            end
+        else
+            self.hero.isAttacking = false
+            self.infoLayer:setMonsterWidgetVisibility(false)
+            if self.infoLayer.monster then 
+                self.infoLayer:removeMonster()
+            end
+        end
     end
     
     self:scheduleUpdateWithPriorityLua(update, 0)  
@@ -46,7 +65,17 @@ function MapLayer:ctor()
     
 end
 
-
+function MapLayer:meetMonster()
+    local heroPos = cc.p(self.hero:getPosition())
+    local rect = self.hero:getBoundingBox()
+    for i = 1,#self.monsters do
+        --if cc.rectContainsPoint(self.monsters[i]:getBoundingBox(),heroPos) then
+        if cc.rectIntersectsRect(rect,self.monsters[i]:getBoundingBox()) then
+            return self.monsters[i]
+        end
+    end
+    return nil
+end
 
 
 --注册touch事件
@@ -143,6 +172,18 @@ function MapLayer:setEntities()
     
 end
 
+
+function MapLayer:removeEntity(entity)
+    for i =1,#self.monsters do
+        if entity == self.monsters[i] then
+            table.remove(self.monsters,i)
+            self:removeChild(entity,true)
+            return true
+        end
+    end
+    return false
+end
+
 --设置视点
 function MapLayer:setViewPointCenter(point)
     --print(string.format("setViewPointCenter:%f,%f",point.x ,point.y))
@@ -161,7 +202,7 @@ function MapLayer:setViewPointCenter(point)
 end
 
 
-
+--set target point when touched
 function MapLayer:getMoveTargetPoint(cur,tar)
     local curPosition = cc.p(cur.x,cur.y)
     local delta = CONF.MAP_TILESIZE / 2.0
@@ -213,6 +254,7 @@ end
 
 function MapLayer:setInfos(InfoLayer)
 	self.infoLayer = InfoLayer
+    self.infoLayer:setHero(self.hero)
 end
 
 

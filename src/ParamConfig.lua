@@ -59,7 +59,7 @@ CONF = {
     MONSTER1_DIRECTIONS = 4,
     MONSTER1_FRAME_NUM = 7,
     
-    MONSTER1_HP = 300,
+    MONSTER1_HP = 500,
     MONSTER1_DAMAGE=20,
     
     
