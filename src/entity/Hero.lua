@@ -1,6 +1,6 @@
 require("entity/Entity")
 require("ParamConfig")
-
+require("entity/Weapon")
 
 Hero = class("Hero",function(filepath)
     return Entity.new(filepath)
@@ -14,7 +14,11 @@ function Hero:ctor()
     self.mp = CONF.HERO_MP
     self.damage = CONF.HERO_DAMAGE
     -- need to init
-    self.weapon = nil
+    self.weapon = Weapon.create()
+    
+    --need to be done for weapon
+    self.weapon:setPosition(cc.p(30,25))
+    self:addChild(self.weapon )
 end
 
 function Hero.create()
