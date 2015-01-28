@@ -13,6 +13,8 @@ function Entity:ctor()
     self.isAlive = true
     self.isAttacking = false
     self.hp=0
+    self.moveInfo = nil
+    self.entitState = ENTITY_STATE.STATE_STAND
 end
 
 

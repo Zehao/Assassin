@@ -9,7 +9,7 @@ RESOLUTION_WIDTH = 1200,
 --map
 MAP_HEIGHT = 3000,
 MAP_WIDTH = 4000,
-
+MAP_TILESIZE = 50,
 MAP_TILE_PATH = "bg/bg.tmx",
 MAP_TILE_BG = "bg",
 MAP_TILE_ACCESS = "access",

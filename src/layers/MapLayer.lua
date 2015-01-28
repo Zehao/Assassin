@@ -6,14 +6,13 @@ require("types/MoveInfo")
 
 MapLayer = class("MapLayer",function() return cc.Layer:create() end)
 MapLayer.__index = MapLayer
-local WIN_SIZE = cc.Director:getInstance():getVisibleSize()
 
+local WIN_SIZE = cc.Director:getInstance():getVisibleSize()
 
 function MapLayer:ctor()
     self.map = cc.TMXTiledMap:create(CONF.MAP_TILE_PATH)
     assert(self.map,"null map")
-    self.tileSize = self.map:getTileSize()
-    
+
     self.accessLayer = self.map:getLayer(CONF.MAP_TILE_ACCESS)
     assert(self.accessLayer,"null layer")
     self.accessLayer:setVisible(false)
@@ -31,89 +30,69 @@ function MapLayer:ctor()
     
     self.monsters = {}
     self:setEntities()
-    self.heroNeedMove = false
-    self.moveInfo = MoveInfo.new()
     self.infoLayer=nil
     self:setViewPointCenter(cc.p(self.hero:getPosition()))
     self:registerTouchEvent()
+    
+    
+    --schedule update 
+    --update per frame
+    local function update(delta)
+        self:setViewPointCenter(cc.p(self.hero:getPosition()))
+    end
+    
+    self:scheduleUpdateWithPriorityLua(update, 0)  
+    
+    
 end
+
+
+
 
 --注册touch事件
 function MapLayer:registerTouchEvent()
     local dispatcher = cc.Director:getInstance():getEventDispatcher()
     local listener = cc.EventListenerTouchOneByOne:create()
-    
-    
-    --update per frame
-    local update = function(delta)
-        if self.heroNeedMove == false then
-            return
-        end
-        if self.moveInfo:isDestination() then
-            --print("MOVED")
-            self.hero:setPosition(self.moveInfo.targetPoint)
-            self.hero:stopAllActions()
-            self.hero:runAnimation(ANIMATION_TYPE.HERO_STAND)
-            self:unscheduleUpdate()
-            self.heroNeedMove = false
-        else
-            local pos =  self.moveInfo:getNewPos()
-            --print(string.format("CURRENT POSITION:%f,%f . TARGET POSITION:%f,%f " , pos.x , pos.y, self.moveInfo.targetPoint.x ,  self.moveInfo.targetPoint.y))
-            if self:isAccessable(self.moveInfo:checkPoint()) then
-                self.hero:setPosition(pos)
-            else
-                self.heroNeedMove = false
-                self.hero:stopAllActions()
-                self.hero:runAnimation(ANIMATION_TYPE.HERO_STAND)
-                self:unscheduleUpdate()
-            end
-        end
-        self:setViewPointCenter(cc.p(self.hero:getPosition()))
-    end
-    
-    
+
     -- on touch began
     local function onTouchBegan(touch , event)
         local touchPoint = touch:getLocation()
         touchPoint = self:convertToNodeSpace(touchPoint)
         local heroPos = cc.p(self.hero:getPosition())
-        
+        local moveInfo = MoveInfo.new()
         local p = self.hero:getBoundingBox()
-        self.heroNeedMove = true
+        local heroNeedMove = true
         
         if touchPoint.x > p.x + p.width then
             if touchPoint.y > p.y+p.height then
-                self.moveInfo.direction = ENTITY_DIRECTION.RIGHT_UP
+                moveInfo.direction = ENTITY_DIRECTION.RIGHT_UP
             elseif touchPoint.y < p.y then
-                 self.moveInfo.direction = ENTITY_DIRECTION.RIGHT_DOWN
+                 moveInfo.direction = ENTITY_DIRECTION.RIGHT_DOWN
             else
-                 self.moveInfo.direction = ENTITY_DIRECTION.RIGHT
+                 moveInfo.direction = ENTITY_DIRECTION.RIGHT
             end
         elseif touchPoint.x < p.x then
             if touchPoint.y > p.y+p.height then
-                 self.moveInfo.direction = ENTITY_DIRECTION.LEFT_UP
+                 moveInfo.direction = ENTITY_DIRECTION.LEFT_UP
             elseif touchPoint.y < p.y then
-                 self.moveInfo.direction = ENTITY_DIRECTION.LEFT_DOWN
+                 moveInfo.direction = ENTITY_DIRECTION.LEFT_DOWN
             else
-                 self.moveInfo.direction = ENTITY_DIRECTION.LEFT
+                 moveInfo.direction = ENTITY_DIRECTION.LEFT
             end
         else
             if touchPoint.y > p.y+p.height then
-                 self.moveInfo.direction = ENTITY_DIRECTION.UP
+                 moveInfo.direction = ENTITY_DIRECTION.UP
             elseif touchPoint.y < p.y then
-                 self.moveInfo.direction = ENTITY_DIRECTION.DOWN
+                 moveInfo.direction = ENTITY_DIRECTION.DOWN
             else
-                self.heroNeedMove = false
+                heroNeedMove = false
             end
         end
     
-        if self.heroNeedMove then
-            self.moveInfo:setPoint(heroPos, touchPoint)
-            self.moveInfo.tileSize = self.tileSize
-            self.hero:setDirection(self.moveInfo.direction)
-            self.hero:stopAllActions()
-            self.hero:runAnimation(ANIMATION_TYPE.HERO_RUN)
-            self:scheduleUpdateWithPriorityLua(update, 0)  --schedule update 
+        if heroNeedMove then
+            moveInfo:setPoint(heroPos, self:getMoveTargetPoint(heroPos,touchPoint))
+            self.hero:setDirection(moveInfo.direction)
+            self.hero:move(moveInfo)
         end
         return true
     end
@@ -183,7 +162,37 @@ end
 
 
 
+function MapLayer:getMoveTargetPoint(cur,tar)
+    local curPosition = cc.p(cur.x,cur.y)
+    local delta = CONF.MAP_TILESIZE / 2.0
+    local theta = math.atan(math.abs((tar.y - cur.y) / (tar.x - cur.x) ) )
 
+    local deltaX,deltaY = delta * math.cos(theta) , delta * math.sin(theta)
+    if tar.x < cur.x then deltaX = - deltaX  end
+    if tar.y < cur.y then deltaY = - deltaY  end
+    
+    local function isClose()
+        local d1 = ( curPosition.x - tar.x)*( curPosition.x - tar.x)
+        local d2 = ( curPosition.y - tar.y)*( curPosition.y - tar.y)
+        if (d1 + d2) < delta*delta then
+            return true
+        end
+        return false
+    end
+    
+    
+    while true do
+        if isClose() then
+            curPosition.x ,curPosition.y = tar.x,tar.y
+            break
+        end
+        if self:isAccessable(cc.p(curPosition.x + deltaX,curPosition.y + deltaY ))== false then
+            break
+        end
+        curPosition.x , curPosition.y  = curPosition.x + deltaX,curPosition.y + deltaY 
+    end
+    return curPosition
+end
 
 function MapLayer:isAccessable(point)
     local tile = self:point2Tile(point)
@@ -196,8 +205,8 @@ function MapLayer:isAccessable(point)
 end
 
 function MapLayer:point2Tile(point)
-    local x = math.floor(point.x / self.tileSize.width )
-    local y = math.floor( (CONF.MAP_HEIGHT - point.y) / self.tileSize.height)
+    local x = math.floor(point.x / CONF.MAP_TILESIZE )
+    local y = math.floor( (CONF.MAP_HEIGHT - point.y) / CONF.MAP_TILESIZE )
     return cc.p(x,y)
 end
 
