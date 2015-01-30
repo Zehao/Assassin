@@ -1,6 +1,4 @@
 
-
-
 -- 方向
 ENTITY_DIRECTION =
     {   RIGHT_DOWN=1,
@@ -13,6 +11,11 @@ ENTITY_DIRECTION =
         RIGHT=8
      }
 
+
+ACTION_TAG={
+    MOVE = 1,
+    CHANGING=2,
+}
      
 --动画类型
 ANIMATION_TYPE = {
@@ -45,3 +48,7 @@ LAYER_ZORDER = {
     ENTITY = 1,
     INFO = 2
 }
+
+
+
+

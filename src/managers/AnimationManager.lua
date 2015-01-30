@@ -9,7 +9,6 @@ function AnimationManager:new(o)
 	return o
 end
 
-
 function AnimationManager:getInstance()
     if self.instance == nil then
         self.instance = self:new()
@@ -46,12 +45,12 @@ function AnimationManager:initWeapons(spriteFrameCache)
         for j = 0 , CONF.WEAPON_FRAME_NUM-1 do
             local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.WEAPON_PREFIX,i,j))
             if frame then
-                table.insert(frames,frame)
+                frames[#frames+1] = frame
             end
         end
-        local animation = cc.Animation:createWithSpriteFrames(frames,0.08,-1)
-        animation:retain()
-        self.weapon[#self.weapon + 1] = animation
+        --animation = cc.Animation:createWithSpriteFrames(frames,0.08,-1)
+        --animation:retain()
+        self.weapon[#self.weapon + 1] = frames
     end
 end
 
@@ -63,12 +62,10 @@ function AnimationManager:initHero(spriteFrameCache)
         for j = 0 , CONF.HERO_ATTACK_FRAME_NUM-1 do
             local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.HERO_ATTACK_PREFIX,i,j))
             if frame then
-                table.insert(frames,frame)
+                frames[#frames+1] = frame
             end
         end
-        local animation = cc.Animation:createWithSpriteFrames(frames,0.08,-1)
-        animation:retain()
-        self.hero_attack[#self.hero_attack + 1] = animation
+        self.hero_attack[#self.hero_attack + 1] = frames
     end
 
     --hero run
@@ -77,12 +74,11 @@ function AnimationManager:initHero(spriteFrameCache)
         for j = 0 , CONF.HERO_RUN_FRAME_NUM-1 do
             local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.HERO_RUN_PREFIX,i,j))
             if frame then
-                table.insert(frames,frame)
+                frames[#frames+1] = frame
             end
         end
-        local animation = cc.Animation:createWithSpriteFrames(frames,0.08,-1)
-        animation:retain()
-        self.hero_run[#self.hero_run + 1 ] = animation
+        --animation = cc.Animation:createWithSpriteFrames(frames,0.08,-1)
+        self.hero_run[#self.hero_run + 1 ] = frames
     end
 
     --hero stand
@@ -91,12 +87,12 @@ function AnimationManager:initHero(spriteFrameCache)
         for j = 0 , CONF.HERO_STOP_FRAME_NUM-1 do
             local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.HERO_STOP_PREFIX,i,j))
             if frame then
-                table.insert(frames,frame)
+                frames[#frames+1] = frame
             end
         end
-        local animation = cc.Animation:createWithSpriteFrames(frames,0.1,-1)
-        animation:retain()
-        self.hero_stand[#self.hero_stand+1] = animation
+        --animation = cc.Animation:createWithSpriteFrames(frames,0.1,-1)
+        --animation:retain()
+        self.hero_stand[#self.hero_stand+1] = frames
     end
 end
 
@@ -108,29 +104,47 @@ function AnimationManager:initMonsters(spriteFrameCache)
         for j = 0 , CONF.MONSTER1_FRAME_NUM-1 do
             local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.MONSTER1_PREFIX,i,j))
             if frame then
-                table.insert(frames,frame)
+                frames[#frames+1] = frame
             end
         end
-        local animation = cc.Animation:createWithSpriteFrames(frames,0.1,-1)
-        animation:retain()
-        self.monster1[#self.monster1+1 ] =animation
+        --animation = cc.Animation:createWithSpriteFrames(frames,0.1,-1)
+        --animation:retain()
+        
+        self.monster1[#self.monster1+1 ] =frames
     end
 
 end
 
 
-function AnimationManager:getAnimation(animateType , direction)
+function AnimationManager:getOnceAnimation(animateType , direction)
+    
+    return self:getAnimation(animateType,direction,1)
+end
+
+function AnimationManager:getForeverAnimation(animateType , direction)
+
+    return self:getAnimation(animateType,direction,-1)
+end
+
+
+function AnimationManager:getAnimation(animateType , direction,loops)
+    local frames
+    local freq=0.08
+    
     if animateType == ANIMATION_TYPE.HERO_RUN then
-        return self.hero_run[direction]
+        frames = self.hero_run[direction]
     elseif animateType == ANIMATION_TYPE.HERO_STAND then
-        return self.hero_stand[direction]
+        freq = 0.1
+        frames =  self.hero_stand[direction]
     elseif animateType == ANIMATION_TYPE.HERO_ATTACK then
-        return self.hero_attack[direction]
+        print("direction:" , direction , "total" , #self.hero_attack)
+        if direction > 4 then direction = math.floor(direction/2);print(direction) end
+        frames =  self.hero_attack[direction]
     elseif animateType == ANIMATION_TYPE.MONSTER then
-        return self.monster1[direction]
-        
+        frames =  self.monster1[direction]
     else
-        return self.weapon[direction]
+        frames =  self.weapon[direction]
     end
-    return nil
+    
+    return cc.Animation:createWithSpriteFrames(frames,freq,loops)
 end

@@ -35,35 +35,34 @@ function MapLayer:ctor()
     self:registerTouchEvent()
     
     
-    --schedule update 
-    --update per frame
-    local function update(delta)
-        self:setViewPointCenter(cc.p(self.hero:getPosition()))
-        local monster = self:meetMonster()
-        if monster then
-            --self.hero
-            --print("meet",delta, monster:getPosition())
-            if self.infoLayer.monster == nil then 
-                self.infoLayer:setMonster(monster)
-                self.infoLayer:setMonsterWidgetVisibility(true)
-            end
-            if self.hero.isAlive==true and (self.hero.isAttacking == false) then
-                self.hero:attack(monster)
-            --monster:attack(self.hero)
-            end
-        else
-            self.hero.isAttacking = false
-            self.infoLayer:setMonsterWidgetVisibility(false)
-            if self.infoLayer.monster then 
-                self.infoLayer:removeMonster()
-            end
-        end
+    
+    local function scheduleFight()
+        
+        
+--        local faceMonster = self:meetMonster()
+--        if faceMonster then 
+--            --print(faceMonster:getPosition())
+--            self.hero:stateEnterStand()
+--        end        
     end
+
+    --每帧刷新视角
+    local function scheduleViewPoint(delta)
+        self:setViewPointCenter(cc.p(self.hero:getPosition()))
+    end
+
     
-    self:scheduleUpdateWithPriorityLua(update, 0)  
+    local scheduler = cc.Director:getInstance():getScheduler()
     
+    --local viewFrequency = 1/60.0
+    --self.scheduleViewpointID = scheduler:scheduleScriptFunc(scheduleViewPoint,viewFrequency,false)
+    self:scheduleUpdateWithPriorityLua(scheduleViewPoint, 0)  
+    
+    local fightViewFrequency = 1/10.0
+    self.schequleFightID = scheduler:scheduleScriptFunc(scheduleFight,fightViewFrequency,false)
     
 end
+
 
 function MapLayer:meetMonster()
     local heroPos = cc.p(self.hero:getPosition())
@@ -239,11 +238,20 @@ function MapLayer:isAccessable(point)
     local tile = self:point2Tile(point)
     local gid = self.accessLayer:getTileGIDAt(tile)
     --print(string.format("current tile:%d,%d,gid:%d",tile.x,tile.y,gid))
-    if gid ~= 0 then 
-        return true
+    
+    if gid == 0 then
+        return false
     end
-    return false
+    
+    for i = 1,#self.monsters do
+        if cc.rectContainsPoint(self.monsters[i]:getBoundingBox(),point) then
+            return false
+        end
+    end
+    
+    return true
 end
+
 
 function MapLayer:point2Tile(point)
     local x = math.floor(point.x / CONF.MAP_TILESIZE )

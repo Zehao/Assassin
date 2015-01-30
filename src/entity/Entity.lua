@@ -14,7 +14,7 @@ function Entity:ctor()
     self.isAttacking = false
     self.hp=0
     self.moveInfo = nil
-    self.entitState = ENTITY_STATE.STATE_STAND
+    self.entityState = ENTITY_STATE.STATE_STAND
     
     local function update()
         if self.isAttacking == false then return end
@@ -24,6 +24,20 @@ function Entity:ctor()
 
 end
 
+function Entity:stateEnterRun()
+end
+
+function Entity:stateEnterStand()
+end
+
+function Entity:stateEnterDie()
+end
+
+function Entity:enterStateFight()
+end
+
+function Entity:changeState(state)
+end
 
 function Entity:attack(target)
     if self.isAttacking then 
@@ -49,14 +63,16 @@ function Entity:setDirection(direct)
     self.direction = direct
 end
 
-function Entity:stopAnimation()
+function Entity:stopAnimations()
     Entity:stopAllActions()
 end
 
 function Entity:runAnimation(animation_type)
-    local animation = AnimationManager:getInstance():getAnimation(animation_type , self.direction)
+    local animation = AnimationManager:getInstance():getForeverAnimation(animation_type , self.direction)
     --print(animation , animation_type , self.direction)
-    self:runAction(cc.Animate:create(animation))
+    local animate = cc.Animate:create(animation)
+    animate:setTag(ACTION_TAG.CHANGING)
+    self:runAction(animate)
 end
 
 function Entity:setHP(value)
