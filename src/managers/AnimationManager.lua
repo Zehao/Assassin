@@ -43,6 +43,7 @@ function AnimationManager:initWeapons(spriteFrameCache)
     for i = 0 ,  CONF.WEAPON_DIRECTIONS-1 do
         local frames={}
         for j = 0 , CONF.WEAPON_FRAME_NUM-1 do
+            --print(string.format("%s%02d%03d.png",CONF.WEAPON_PREFIX,i,j))
             local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.WEAPON_PREFIX,i,j))
             if frame then
                 frames[#frames+1] = frame
@@ -137,8 +138,8 @@ function AnimationManager:getAnimation(animateType , direction,loops)
         freq = 0.1
         frames =  self.hero_stand[direction]
     elseif animateType == ANIMATION_TYPE.HERO_ATTACK then
-        print("direction:" , direction , "total" , #self.hero_attack)
-        if direction > 4 then direction = math.floor(direction/2);print(direction) end
+        --print("direction:" , direction , "total" , #self.hero_attack)
+        if direction > 4 then direction = math.floor(direction/2) end
         frames =  self.hero_attack[direction]
     elseif animateType == ANIMATION_TYPE.MONSTER then
         frames =  self.monster1[direction]

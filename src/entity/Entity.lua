@@ -67,6 +67,19 @@ function Entity:stopAnimations()
     Entity:stopAllActions()
 end
 
+
+function Entity:runAnimationOnce(animation_type)
+    local animation = AnimationManager:getInstance():getOnceAnimation(animation_type , self.direction)
+    --print(animation , animation_type , self.direction)
+    local animate = cc.Animate:create(animation)
+    animate:setTag(ACTION_TAG.CHANGING)
+    self:runAction(animate)
+end
+
+function Entity:getAnimation(animation_type)
+    return AnimationManager:getInstance():getOnceAnimation(animation_type, self.direction)
+end
+
 function Entity:runAnimation(animation_type)
     local animation = AnimationManager:getInstance():getForeverAnimation(animation_type , self.direction)
     --print(animation , animation_type , self.direction)

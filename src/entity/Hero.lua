@@ -18,8 +18,8 @@ function Hero:ctor()
     
     --need to be done for weapon
     self.weapon:setPosition(cc.p(30,25))
+    --self.weapon:setVisible(false)
     self:addChild(self.weapon )
-    
     
     local dispatcher =  cc.Director:getInstance():getEventDispatcher()
     local listener = cc.EventListenerKeyboard:create()
@@ -54,11 +54,7 @@ end
 function Hero.create()
     return Hero.new(CONF.HERO_STATIC_TEXTURE)
 end
-
-function Hero:runWeaponAnimation()
-    local animation = AnimationManager:getInstance():getForeverAnimation(ANIMATION_TYPE.WEAPON,self.direction)
-    self.weapon:runAction(cc.Animate:create(animation))
-end
+ 
 
 
 
@@ -87,7 +83,7 @@ end
 
 function Hero:stateEnterStand()
     assert(self.entityState ~= ENTITY_STATE.STATE_DIE)
-    assert(self.entityState ~= ENTITY_STATE.STATE_FIGHT)
+    --assert(self.entityState ~= ENTITY_STATE.STATE_FIGHT)
     if self.entityState == ENTITY_STATE.STATE_STAND then
         return true
     end
@@ -105,12 +101,28 @@ function Hero:stateEnterDie()
 end
 
 function Hero:enterStateFight()
-    self:stopActionByTag(ACTION_TAG.CHANGING)
     if self.entityState == ENTITY_STATE.STATE_FIGHT then
         return true
     end
     self.entityState = ENTITY_STATE.STATE_FIGHT
-    self:runAnimation(ANIMATION_TYPE.HERO_ATTACK)
+    self:stopActionByTag(ACTION_TAG.CHANGING)
+    self:stopActionByTag(ACTION_TAG.MOVE)
+    self.weapon:stopAllActions()
+    
+    local endFight = function()
+        self:stateEnterStand()
+    end
+    
+    
+    --self:runAnimationOnce(ANIMATION_TYPE.HERO_ATTACK)
+    
+    print("attack direction:", self.direction)
+    local animation = self:getAnimation(ANIMATION_TYPE.HERO_ATTACK)
+    local actions = cc.Sequence:create(cc.Animate:create(animation),cc.CallFunc:create(endFight))
+    actions:setTag(ACTION_TAG.CHANGING)
+    self:runAction(actions)
+    
+    self.weapon:runActions(self.direction)
 end
 
 

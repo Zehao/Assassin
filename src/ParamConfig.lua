@@ -44,7 +44,7 @@ CONF = {
     
     --weapon
     WEAPON_PLIST = "hero/weapon.plist",
-    WEAPON_PNG = "hero/weapons.png",
+    WEAPON_PNG = "hero/weapon.png",
     WEAPON_PREFIX = "0012-494dc152-",
     WEAPON_STATIC = "hero/weapon_static.png",
     WEAPON_FRAME_NUM = 8,

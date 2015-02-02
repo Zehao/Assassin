@@ -842,13 +842,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>weapons.png</string>
+            <string>weapon.png</string>
             <key>size</key>
             <string>{126,1363}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:ef5c8c906cdcaf9fe9c5bf92d4ea8412:eed61ef8b6d22a7f253849bde3fb1f94:65dd89842f3f41381b5b024969f267cf$</string>
+            <string>$TexturePacker:SmartUpdate:ace7377221d66f74da52a6da6b4fe6e6:eed61ef8b6d22a7f253849bde3fb1f94:f56027bfb88798a33d33ff61c031c331$</string>
             <key>textureFileName</key>
-            <string>weapons.png</string>
+            <string>weapon.png</string>
         </dict>
     </dict>
 </plist>
