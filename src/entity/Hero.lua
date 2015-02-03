@@ -17,7 +17,7 @@ function Hero:ctor()
     self.weapon = Weapon.create()
     
     --need to be done for weapon
-    self.weapon:setPosition(cc.p(30,25))
+    self.weapon:setPosition(cc.p(self:getContentSize().width/2.0,self:getContentSize().height/2.0))
     --self.weapon:setVisible(false)
     self:addChild(self.weapon )
     
@@ -72,7 +72,11 @@ function Hero:stateEnterRun()
     
     self:stopActionByTag(ACTION_TAG.MOVE)
     self:stopActionByTag(ACTION_TAG.CHANGING)
-    self:runAnimation(ANIMATION_TYPE.HERO_RUN)
+    local animation = self:getAnimation(ANIMATION_TYPE.HERO_RUN,self.direction,-1)
+    local animate = cc.Animate:create(animation)
+    animate:setTag(ACTION_TAG.CHANGING)
+    self:runAction(animate)
+    
     self.entityState = ENTITY_STATE.STATE_RUN
     local action = cc.Sequence:create(move,cc.CallFunc:create(endRun))
     action:setTag(ACTION_TAG.MOVE)
@@ -89,7 +93,14 @@ function Hero:stateEnterStand()
     end
     self:stopActionByTag(ACTION_TAG.CHANGING)
     self.entityState = ENTITY_STATE.STATE_STAND
-    self:runAnimation(ANIMATION_TYPE.HERO_STAND)
+    self:stopActionByTag(ACTION_TAG.MOVE)
+    self:stopActionByTag(ACTION_TAG.CHANGING)
+    
+    local animation = self:getAnimation(ANIMATION_TYPE.HERO_STAND,self.direction,-1)
+    local animate = cc.Animate:create(animation)
+    animate:setTag(ACTION_TAG.CHANGING)
+    self:runAction(animate)
+    
     return true
 end
 
@@ -117,7 +128,7 @@ function Hero:enterStateFight()
     --self:runAnimationOnce(ANIMATION_TYPE.HERO_ATTACK)
     
     print("attack direction:", self.direction)
-    local animation = self:getAnimation(ANIMATION_TYPE.HERO_ATTACK)
+    local animation = self:getAnimation(ANIMATION_TYPE.HERO_ATTACK,self.direction,1)
     local actions = cc.Sequence:create(cc.Animate:create(animation),cc.CallFunc:create(endFight))
     actions:setTag(ACTION_TAG.CHANGING)
     self:runAction(actions)

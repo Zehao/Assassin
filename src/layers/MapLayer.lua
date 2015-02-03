@@ -152,16 +152,16 @@ function MapLayer:setEntities()
         if entityType == "hero" then
 
             self.hero = Hero.create()
-            self.hero:setScale(1.4)
-            self.hero:runAnimation(ANIMATION_TYPE.HERO_STAND)
+            --self.hero:runAnimation(ANIMATION_TYPE.HERO_STAND)
+            
             self.hero:setPosition(x,y)
+            self.hero:stateEnterStand()
             self:addChild(self.hero , LAYER_ZORDER.ENTITY)
         elseif entityType == "m1" then
             local monster = Monster.create()
             monster:setPosition(x,y)
-            monster:setScale(1.4)
             monster.direction = math.random(1,CONF.MONSTER1_DIRECTIONS)
-            monster:runAnimation(ANIMATION_TYPE.MONSTER)
+            monster:walkAround()
             table.insert(self.monsters,monster)
             self:addChild(monster,LAYER_ZORDER.ENTITY)
         else

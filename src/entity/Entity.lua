@@ -14,8 +14,8 @@ function Entity:ctor()
     self.isAttacking = false
     self.hp=0
     self.moveInfo = nil
-    self.entityState = ENTITY_STATE.STATE_STAND
-    
+    self.entityState = nil
+    self:setScale(1.5)
     local function update()
         if self.isAttacking == false then return end
     end
@@ -76,17 +76,17 @@ function Entity:runAnimationOnce(animation_type)
     self:runAction(animate)
 end
 
-function Entity:getAnimation(animation_type)
-    return AnimationManager:getInstance():getOnceAnimation(animation_type, self.direction)
+function Entity:getAnimation(animation_type, direction,loops)
+    return AnimationManager:getInstance():getAnimation(animation_type,direction ,loops)
 end
 
-function Entity:runAnimation(animation_type)
-    local animation = AnimationManager:getInstance():getForeverAnimation(animation_type , self.direction)
-    --print(animation , animation_type , self.direction)
-    local animate = cc.Animate:create(animation)
-    animate:setTag(ACTION_TAG.CHANGING)
-    self:runAction(animate)
-end
+--function Entity:runAnimation(animation_type)
+--    local animation = AnimationManager:getInstance():getForeverAnimation(animation_type , self.direction)
+--    --print(animation , animation_type , self.direction)
+--    local animate = cc.Animate:create(animation)
+--    animate:setTag(ACTION_TAG.CHANGING)
+--    self:runAction(animate)
+--end
 
 function Entity:setHP(value)
     self.hp = value
