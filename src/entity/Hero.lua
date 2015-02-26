@@ -18,6 +18,7 @@ function Hero:ctor()
     
     --need to be done for weapon
     self.weapon:setPosition(cc.p(self:getContentSize().width/2.0,self:getContentSize().height/2.0))
+    self.weapon.pos = cc.p(self:getContentSize().width/2.0,self:getContentSize().height/2.0)
     --self.weapon:setVisible(false)
     self:addChild(self.weapon )
     

@@ -13,7 +13,7 @@ end
 function Weapon:runActions(direction)
     self:setVisible(true)
     local animation = AnimationManager:getInstance():getOnceAnimation(ANIMATION_TYPE.WEAPON,direction)
-    local pos = cc.p(self:getPosition())
+    local pos = self.pos
     local tarPos=nil
     local dis = 70
     if direction == ENTITY_DIRECTION.LEFT_DOWN then
@@ -38,9 +38,9 @@ function Weapon:runActions(direction)
 
     local move = cc.MoveBy:create(0.3,tarPos)
     local fadeout = cc.FadeOut:create(0.3)
-    local fadein = cc.FadeIn:create(0.1)
+    local fadein = cc.FadeIn:create(0.05)
 
-    local fade = cc.Sequence:create(fadeout,fadein,cc.DelayTime:create(0.3),
+    local fade = cc.Sequence:create(fadein,cc.DelayTime:create(0.3),
         cc.CallFunc:create(
         function() 
             self:stopAllActions() 
