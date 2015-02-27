@@ -17,7 +17,7 @@ function Monster:ctor()
         self:walkAround()
     end
     
-    self.scheduler:scheduleScriptFunc(walk,math.random(6,8),false)
+    self.scheduleWalk = self.scheduler:scheduleScriptFunc(walk,math.random(6,8),false)
 end
 
 
@@ -29,7 +29,55 @@ function Monster:setTarget(hero)
     self.target = hero 
 end
 
+function Monster:stateEnterFight()
+    if self.entityState == ENTITY_STATE.STATE_FIGHT then
+        return true
+    end
+    self.entityState = ENTITY_STATE.STATE_FIGHT
+    
+    self:stopAllActions()
+    self.scheduler:unscheduleScriptEntry(self.scheduleWalk)
+    
+    
+    local direction,moveinfo = self:getFocus()
+    
+    local deltaPoint = cc.pSub(cc.p(self.target:getPosition()),cc.p(self:getPosition()) )
+    local moveinfo = cc.p(deltaPoint.x*0.5,deltaPoint.y*0.5)
+    
+    local animation = self:getAnimation(ANIMATION_TYPE.MONSTER,direction,-1)
+    
+    
+    
+    local moveAction 
+    if cc.rectIntersectsRect(self:getBoundingBox(),self.target:getBoundingBox()) == false then
+        
+    end
+    moveAction = cc.MoveBy:create(0.1,moveinfo)
+    self:runAction(moveAction)
+    self:runAction(cc.Animate:create(animation))
+    
+    local function attackHero()
+        self:attack(self.target)
+    end
+    
+    self.scheduler:scheduleScriptFunc(attackHero,1.6,false)
+end
 
+
+function Monster:getFocus()
+    local targetDirection = self.target:getDirection()
+    local dis = CONF.HERO_ATTACK_DISTANCE/2
+    if targetDirection == ENTITY_DIRECTION.DOWN  or targetDirection == ENTITY_DIRECTION.RIGHT_DOWN then
+        return ENTITY_DIRECTION.LEFT_UP,cc.p(-dis,dis)
+    elseif targetDirection == ENTITY_DIRECTION.UP or targetDirection == ENTITY_DIRECTION.LEFT_UP then
+        return ENTITY_DIRECTION.RIGHT_DOWN,cc.p(dis,-dis)
+    elseif targetDirection == ENTITY_DIRECTION.LEFT or targetDirection == ENTITY_DIRECTION.LEFT_DOWN then
+        return ENTITY_DIRECTION.RIGHT_UP,cc.p(dis,dis)
+    elseif targetDirection == ENTITY_DIRECTION.RIGHT or targetDirection == ENTITY_DIRECTION.RIGHT_UP then
+        return ENTITY_DIRECTION.LEFT_DOWN,cc.p(-dis,-dis)
+    end
+    
+end
 
 function Monster:walkAround()
 

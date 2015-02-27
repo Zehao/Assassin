@@ -117,11 +117,13 @@ function Hero:enterStateFight()
         return true
     end
     self.entityState = ENTITY_STATE.STATE_FIGHT
+    
     self:stopActionByTag(ACTION_TAG.CHANGING)
     self:stopActionByTag(ACTION_TAG.MOVE)
     self.weapon:stopAllActions()
     
     local endFight = function()
+        
         self:stateEnterStand()
     end
     
@@ -130,11 +132,25 @@ function Hero:enterStateFight()
     
     print("attack direction:", self.direction)
     local animation = self:getAnimation(ANIMATION_TYPE.HERO_ATTACK,self.direction,1)
-    local actions = cc.Sequence:create(cc.Animate:create(animation),cc.CallFunc:create(endFight))
+    local actions = cc.Sequence:create(cc.Animate:create(animation))
+    local attackDelay = cc.Sequence:create(cc.DelayTime:create(1.0),cc.CallFunc:create(endFight))
     actions:setTag(ACTION_TAG.CHANGING)
     self:runAction(actions)
+    self:runAction(attackDelay)
     
     self.weapon:runActions(self.direction)
+    
+    local target = self:getParent():getAttackMonster(self:getPosition(),self.direction)
+    if target then 
+        self.target = target 
+        self:attack(target)
+        self.target:setTarget(self)
+        self.target:stateEnterFight()
+    end
+    
+    
+    
+    
 end
 
 

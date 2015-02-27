@@ -33,7 +33,8 @@ end
 function Entity:stateEnterDie()
 end
 
-function Entity:enterStateFight()
+function Entity:stateEnterFight()
+    
 end
 
 function Entity:changeState(state)
@@ -43,8 +44,16 @@ function Entity:attack(target)
     if self.isAttacking then 
         return 
     end
-    local function attackInterval(delta)
-        print("hero attack interval")
+    print("is attacking")
+    target.hp = target.hp - self.damage
+    target:runAction(cc.Blink:create(0.3,2))
+    if target.hp <=0 then
+        target.hp = 0
+        target.isAlive = false
+        target:stateEnterDie()
+    end
+--    local function attackInterval(delta)
+--        print("hero attack interval")
 --        target.hp = target.hp - self.damage
 --        if target.hp <= 0 then 
 --            target.hp = 0 
@@ -55,12 +64,20 @@ function Entity:attack(target)
 --            
 --        end
 --        
-    end
-    self.scheduler = cc.Director:getInstance():getScheduler():scheduleScriptFunc(attackInterval,2,false)
+--    end
+--    self.scheduler = cc.Director:getInstance():getScheduler():scheduleScriptFunc(attackInterval,2,false)
+
+end
+
+function Entity:isAttacked()
 end
 
 function Entity:setDirection(direct)
     self.direction = direct
+end
+
+function Entity:getDirection()
+    return self.direction
 end
 
 function Entity:stopAnimations()

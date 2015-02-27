@@ -64,6 +64,8 @@ function MapLayer:ctor()
 end
 
 
+
+
 function MapLayer:meetMonster()
     local heroPos = cc.p(self.hero:getPosition())
     local rect = self.hero:getBoundingBox()
@@ -265,4 +267,59 @@ function MapLayer:setInfos(InfoLayer)
     self.infoLayer:setHero(self.hero)
 end
 
+
+function MapLayer:getAttackMonster(heroPos,attackDirection)
+    --Rect(float x, float y, float width, float height)
+	local distance = CONF.HERO_ATTACK_DISTANCE
+	local rects={}
+	local startRect = self.hero:getBoundingBox()
+	rects[#rects+1 ] = startRect
+	local midRect,endRect
+	local midDis = distance/2
+	if attackDirection == ENTITY_DIRECTION.DOWN then
+        midRect = cc.rect(startRect.x,startRect.y-midDis,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x,startRect.y-distance,startRect.width,startRect.height)
+    elseif attackDirection == ENTITY_DIRECTION.UP then
+        midRect = cc.rect(startRect.x,startRect.y+midDis,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x,startRect.y+distance,startRect.width,startRect.height)
+    elseif attackDirection == ENTITY_DIRECTION.LEFT then
+        midRect = cc.rect(startRect.x-midDis,startRect.y,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x-distance,startRect.y,startRect.width,startRect.height)
+    elseif attackDirection == ENTITY_DIRECTION.RIGHT then
+        midRect = cc.rect(startRect.x+midDis,startRect.y,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x+distance,startRect.y,startRect.width,startRect.height)
+    elseif attackDirection == ENTITY_DIRECTION.RIGHT_DOWN then
+        midRect = cc.rect(startRect.x+midDis,startRect.y-midDis,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x+distance,startRect.y-distance,startRect.width,startRect.height)
+    elseif attackDirection == ENTITY_DIRECTION.LEFT_DOWN then
+        midRect = cc.rect(startRect.x-midDis,startRect.y-midDis,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x-distance,startRect.y-distance,startRect.width,startRect.height)
+    elseif attackDirection == ENTITY_DIRECTION.LEFT_UP then
+        midRect = cc.rect(startRect.x-midDis,startRect.y+midDis,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x-distance,startRect.y+distance,startRect.width,startRect.height)
+    elseif attackDirection == ENTITY_DIRECTION.RIGHT_UP then
+        midRect = cc.rect(startRect.x+midDis,startRect.y+midDis,startRect.width,startRect.height)
+        endRect = cc.rect(startRect.x+distance,startRect.y+distance,startRect.width,startRect.height)
+	end
+	
+    rects[#rects+1 ] = midRect
+    rects[#rects+1 ] = endRect
+    local monster
+    for i=1,#self.monsters do
+        local isIntersect
+        for j = 1,#rects do
+            if cc.rectIntersectsRect(rects[j],self.monsters[i]:getBoundingBox()) then
+                monster = self.monsters[i]
+                isIntersect = true
+                break
+            end
+        end
+        if isIntersect then 
+            break 
+        end
+    end
+    
+    print("target:" , monster)
+    return monster
+end
 

@@ -1,3 +1,4 @@
+require("ParamConfig")
 Weapon=class("Weapon",function(filepath) return cc.Sprite:create(filepath) end)
 
 Weapon.__index = Weapon
@@ -15,7 +16,7 @@ function Weapon:runActions(direction)
     local animation = AnimationManager:getInstance():getOnceAnimation(ANIMATION_TYPE.WEAPON,direction)
     local pos = self.pos
     local tarPos=nil
-    local dis = 70
+    local dis = CONF.HERO_ATTACK_DISTANCE
     if direction == ENTITY_DIRECTION.LEFT_DOWN then
         tarPos = cc.p(-dis,-dis)
     elseif direction == ENTITY_DIRECTION.LEFT then

@@ -41,7 +41,7 @@ CONF = {
     HERO_DAMAGE = 50,
     HERO_DAMAGE_SKILL1 = 100,
     HERO_DAMAGE_SKILL2 = 150,
-    
+    HERO_ATTACK_DISTANCE=100,
     --weapon
     WEAPON_PLIST = "hero/weapon.plist",
     WEAPON_PNG = "hero/weapon.png",
@@ -61,6 +61,7 @@ CONF = {
     
     MONSTER1_HP = 500,
     MONSTER1_DAMAGE=20,
+    
     
     
     --ui
