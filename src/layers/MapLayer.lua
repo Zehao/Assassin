@@ -162,6 +162,7 @@ function MapLayer:setEntities()
         elseif entityType == "m1" then
             local monster = Monster.create()
             monster:setPosition(x,y)
+            monster.originalPos = cc.p(x,y)
             monster.direction = math.random(1,CONF.MONSTER1_DIRECTIONS)
             monster:walkAround()
             table.insert(self.monsters,monster)
