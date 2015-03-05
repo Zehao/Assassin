@@ -59,7 +59,7 @@ function MapLayer:ctor()
     self:scheduleUpdateWithPriorityLua(scheduleViewPoint, 0)  
     
     local fightViewFrequency = 1/10.0
-    self.schequleFightID = scheduler:scheduleScriptFunc(scheduleFight,fightViewFrequency,false)
+    --self.schequleFightID = scheduler:scheduleScriptFunc(scheduleFight,fightViewFrequency,false)
     
 end
 
@@ -164,7 +164,9 @@ function MapLayer:setEntities()
             monster:setPosition(x,y)
             monster.originalPos = cc.p(x,y)
             monster.direction = math.random(1,CONF.MONSTER1_DIRECTIONS)
-            monster:walkAround()
+            --monster:walkAround()
+            monster:stateEnterStand()
+            monster:stateEnterWalkAround()
             table.insert(self.monsters,monster)
             self:addChild(monster,LAYER_ZORDER.ENTITY)
         else

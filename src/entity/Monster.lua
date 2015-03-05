@@ -9,29 +9,6 @@ Monster.__index = Monster
 local currentMonster = {}
 
 
-local function followAttack(dt)
-    print("followAttack")
-    local self = currentMonster
-    if self.target == nil or self.isAttacked == false then return end
-    print("followAttack"   )
-    --若超过距离则返回到原位置
-    if cc.pLengthSQ(cc.pSub(self.originalPos,cc.p(self:getPosition()))) > 90000 then
-        print("return to original")
-        local action = cc.MoveTo:create(2,self.originalPos)
-        self:runAction(action)
-        self:statEnterStand()
-    else
-        print("follow attack")
-        if self.targetLastPos.x == self.target:getPosition() then return end
-        print("real follow")
-        local pos = self.targetLastPos
-        local action = cc.MoveTo:create(0.6,pos)
-        self:runAction(action)
-        self.targetLastPos = cc.p(self.target:getPosition())
-    end
-end
-
-
 
 function Monster:ctor()
     self.hp = CONF.MONSTER1_HP
@@ -40,7 +17,6 @@ function Monster:ctor()
     self.scheduler = cc.Director:getInstance():getScheduler()
     self.isAttacked = false
     self.target = nil
-    self:statEnterStand()
 end
 
 
@@ -55,27 +31,48 @@ function Monster:setTarget(hero)
     self.targetLastPos = cc.p(hero:getPosition())
 end
 
---站立或巡逻
-function Monster:statEnterStand()
+
+--站立
+function Monster:stateEnterStand()
     if self.entityState == ENTITY_STATE.STATE_STAND then
         return true
     end
-    
+    self:stopAllActions()
     self.entityState = ENTITY_STATE.STATE_STAND
-    self.target = nil
-    self.isAttacked = false
-    if self.scheduleFollowAttack then self.scheduler:unscheduleScriptEntry(self.scheduleFollowAttack) end
-    if self.scheduleAttackHero then self.scheduler:unscheduleScriptEntry(self.scheduleAttackHero) end
-    --开始巡逻
-    local function walk()
-        self:walkAround()
-    end
-
-    self.scheduleWalk = self.scheduler:scheduleScriptFunc(walk,math.random(6,8),false)
-
-
+    
+    local animation = self:getAnimation(ANIMATION_TYPE.MONSTER,self.direction,-1)
+    local animate = cc.Animate:create(animation)
+    animate:setTag(ACTION_TAG.CHANGING)
+    self:runAction(animate)
 end
 
+--行走巡逻
+function Monster:stateEnterWalkAround()
+    if self.entityState == ENTITY_STATE.STATE_RUN then
+        self:stateEnterStand()
+    end
+    
+    self.entityState = ENTITY_STATE.STATE_RUN
+    self.target = nil
+    self.isAttacked = false
+
+    if  self.scheduleWalk then self.scheduler: unscheduleScriptEntry(self.scheduleWalk) end
+    self:walkAround()
+    local function walk()
+        print("walk")
+        self:stateEnterWalkAround()
+    end
+    self.scheduleWalk = self.scheduler:scheduleScriptFunc(walk,math.random(11,13),false)
+end
+
+
+
+--进入打斗
+--[[
+修改状态，停止前面所有动画，停止走动定时器，移动到英雄旁边，
+启动followattack定时器和attack定时器
+
+]]
 function Monster:stateEnterFight()
     if self.entityState == ENTITY_STATE.STATE_FIGHT then
         return true
@@ -84,12 +81,12 @@ function Monster:stateEnterFight()
     
     self:stopAllActions()
     self.scheduler:unscheduleScriptEntry(self.scheduleWalk)
-    self.scheduleFollowAttack = self.scheduler:scheduleScriptFunc(followAttack,0.5,false)
+    self.scheduleFollowAttack = self.scheduler:scheduleScriptFunc(Monster.followAttack,0.5,false)
     
     local direction,moveinfo = self:getFocus()
     
     local deltaPoint = cc.pSub(cc.p(self.target:getPosition()),cc.p(self:getPosition()) )
-    local moveinfo = cc.p(deltaPoint.x*0.5,deltaPoint.y*0.5)
+    local moveinfo = cc.p(deltaPoint.x*0.4,deltaPoint.y*0.4)
     
     local animation = self:getAnimation(ANIMATION_TYPE.MONSTER,direction,-1)
     
@@ -105,7 +102,6 @@ function Monster:stateEnterFight()
     
     local function attackHero()
         self:attack(self.target)
-        print("moveinfo:" , moveinfo.x,moveinfo.y)
         local move = cc.p(moveinfo.x*0.2,moveinfo.y*0.2)
         local attackAction = cc.MoveBy:create(0.05,move)
         self:runAction(cc.Sequence:create(attackAction,attackAction:reverse()))
@@ -131,15 +127,21 @@ function Monster:getFocus()
     
 end
 
-function Monster:walkAround()
 
+
+function Monster:distance2hero(hero)
+    return cc.pGetDistance(cc.p(self:getPosition()),cc.p(hero:getPosition()))
+
+end
+
+--行走
+function Monster:walkAround()
     --先保存原始位置
-    self.originalPos = cc.p(self:getPosition())
-	local animationForward = self:getAnimation(ANIMATION_TYPE.MONSTER,self.direction,6)
-	local direction = self.direction
-    local reverseDirection = nil
     local tarPos=nil
     local dis = 150
+    
+    local direction = self.direction
+    local reverseDirection = nil
     if direction == ENTITY_DIRECTION.LEFT_DOWN then
         tarPos = cc.p(-dis,-dis)
         reverseDirection = ENTITY_DIRECTION.RIGHT_UP
@@ -155,40 +157,75 @@ function Monster:walkAround()
     else
         print("error" , direction)
     end
+    --反向
+    local animationReverse = self:getAnimation(ANIMATION_TYPE.MONSTER,reverseDirection,-1)
     
-    
-    
-    local animationReverse = self:getAnimation(ANIMATION_TYPE.MONSTER,reverseDirection,20)
-    
-    local move1 = cc.MoveBy:create(2.5,tarPos)
+    --向前
+--    local animationForward = self:getAnimation(ANIMATION_TYPE.MONSTER,self.direction,-1)
+--    local animate = cc.Animate:create(animationForward)
+--    animate:setTag(ACTION_TAG.CHANGING)
+--    self:runAction(animate)
+
+    local move1 = cc.MoveBy:create(math.random()+2,tarPos)  --2sec to 3sec
     move1:setTag(ACTION_TAG.MOVE)
-    local animate1 = cc.Animate:create(animationForward)
-    animate1:setTag(ACTION_TAG.CHANGING)
     
     local move2 = move1:reverse()
     move2:setTag(ACTION_TAG.MOVE)
+    
     local animate2 = cc.Animate:create(animationReverse)
     animate2:setTag(ACTION_TAG.CHANGING)
     
     
-    
-    
-    
-    
-    
-    local actions = cc.Sequence:create(
-        cc.Spawn:create(move1,animate1),
-        --cc.DelayTime:create(0.01),
-        cc.Spawn:create(move2,animate2)
-    )
-    self:runAction(actions)
+    local function callbackfunc(node,tab)
+        --node:stopAllActions()
+        --node:runAction(animate2)
+        node:stopActionByTag(ACTION_TAG.CHANGING)
+    end
+
+    --self:runAction(actionStart)
+
+    self:runAction(cc.Sequence:create(
+        cc.DelayTime:create(2),
+        move1,
+        cc.DelayTime:create(2),
+        cc.CallFunc:create(callbackfunc),
+        --cc.DelayTime:create(0.1),
+        cc.Spawn:create(animate2,move2)
+     ));
 
 end
 
+function Monster:getReverseAnimation()
 
-
-function Monster:distance2hero(hero)
-    return cc.pGetDistance(cc.p(self:getPosition()),cc.p(hero:getPosition()))
-    
+    return animationReverse
 end
+
+--跟踪攻击
+function Monster.followAttack(dt)
+    local self = currentMonster
+    if self.target == nil or self.isAttacked == false then return end
+    --若超过距离则返回到原位置
+    if cc.pLengthSQ(cc.pSub(self.originalPos,cc.p(self:getPosition()))) > 90000 then
+        print("return to original")
+        if self.scheduleFollowAttack then self.scheduler:unscheduleScriptEntry(self.scheduleFollowAttack) end
+        if self.scheduleAttackHero then self.scheduler:unscheduleScriptEntry(self.scheduleAttackHero) end
+        
+        local function callback(node,tab)
+        	node:stateEnterStand()
+        	node:stateEnterWalkAround()
+        end
+        
+        local action = cc.MoveTo:create(2,self.originalPos)
+        self:runAction(cc.Sequence:create(action,cc.CallFunc:create(callback)))
+
+    else
+        if self.targetLastPos.x == self.target:getPosition() then return end
+        print("real follow")
+        local pos = self.targetLastPos
+        local action = cc.MoveTo:create(0.8,pos)
+        self:runAction(action)
+        self.targetLastPos = cc.p(self.target:getPosition())
+    end
+end
+
 
