@@ -41,10 +41,7 @@ function Entity:changeState(state)
 end
 
 function Entity:attack(target)
-    if self.isAttacking then 
-        return 
-    end
-    print("is attacking")
+
     target.hp = target.hp - self.damage
     
     target:runAction(cc.Blink:create(0.3,2))

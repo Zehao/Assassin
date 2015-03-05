@@ -81,7 +81,7 @@ function Monster:stateEnterFight()
     
     self:stopAllActions()
     self.scheduler:unscheduleScriptEntry(self.scheduleWalk)
-    self.scheduleFollowAttack = self.scheduler:scheduleScriptFunc(Monster.followAttack,0.5,false)
+    self.scheduleFollowAttack = self.scheduler:scheduleScriptFunc(Monster.followAttack,0.4,false)
     
     local direction,moveinfo = self:getFocus()
     
@@ -195,11 +195,6 @@ function Monster:walkAround()
 
 end
 
-function Monster:getReverseAnimation()
-
-    return animationReverse
-end
-
 --跟踪攻击
 function Monster.followAttack(dt)
     local self = currentMonster
@@ -214,15 +209,33 @@ function Monster.followAttack(dt)
         	node:stateEnterStand()
         	node:stateEnterWalkAround()
         end
+        local reverseDirection = nil
+        if self.direction == ENTITY_DIRECTION.LEFT_DOWN then
+            reverseDirection = ENTITY_DIRECTION.RIGHT_UP
+        elseif self.direction == ENTITY_DIRECTION.RIGHT_DOWN then
+            reverseDirection = ENTITY_DIRECTION.LEFT_UP
+        elseif self.direction == ENTITY_DIRECTION.RIGHT_UP then
+            reverseDirection = ENTITY_DIRECTION.LEFT_DOWN
+        elseif self.direction == ENTITY_DIRECTION.LEFT_UP then
+            reverseDirection = ENTITY_DIRECTION.RIGHT_DOWN
+        else
+            print("error" , direction)
+        end
+        self:stopActionByTag(ACTION_TAG.CHANGING)
         
+        local animate = cc.Animate:create(self:getAnimation(ANIMATION_TYPE.MONSTER,reverseDirection,-1))
+        self:runAction(animate)
         local action = cc.MoveTo:create(2,self.originalPos)
         self:runAction(cc.Sequence:create(action,cc.CallFunc:create(callback)))
 
     else
         if self.targetLastPos.x == self.target:getPosition() then return end
         print("real follow")
-        local pos = self.targetLastPos
-        local action = cc.MoveTo:create(0.8,pos)
+        local hero_last_pos = self.targetLastPos
+        local hero_current_pos = cc.p(self.target:getPosition())
+        local pos = cc.pAdd(cc.p(self:getPosition()),cc.pSub(hero_current_pos,hero_last_pos))
+        
+        local action = cc.MoveTo:create(0.5,pos)
         self:runAction(action)
         self.targetLastPos = cc.p(self.target:getPosition())
     end

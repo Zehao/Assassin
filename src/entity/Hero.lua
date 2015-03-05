@@ -19,7 +19,7 @@ function Hero:ctor()
     --need to be done for weapon
     self.weapon:setPosition(cc.p(self:getContentSize().width/2.0,self:getContentSize().height/2.0))
     self.weapon.pos = cc.p(self:getContentSize().width/2.0,self:getContentSize().height/2.0)
-    --self.weapon:setVisible(false)
+    self.weapon:setVisible(false)
     self:addChild(self.weapon )
     
     local dispatcher =  cc.Director:getInstance():getEventDispatcher()
@@ -137,7 +137,7 @@ function Hero:enterStateFight()
     actions:setTag(ACTION_TAG.CHANGING)
     self:runAction(actions)
     self:runAction(attackDelay)
-    
+    self.weapon:setVisible(true)
     self.weapon:runActions(self.direction)
     
     local target = self:getParent():getAttackMonster(self:getPosition(),self.direction)
@@ -147,10 +147,6 @@ function Hero:enterStateFight()
         self.target:setTarget(self)
         self.target:stateEnterFight()
     end
-    
-    
-    
-    
 end
 
 
