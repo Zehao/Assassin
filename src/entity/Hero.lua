@@ -9,6 +9,8 @@ end)
 Hero.__index = Hero
 
 
+
+
 function Hero:ctor()
     self.hp = CONF.HERO_HP
     self.mp = CONF.HERO_MP
@@ -21,7 +23,6 @@ function Hero:ctor()
     self.weapon.pos = cc.p(self:getContentSize().width/2.0,self:getContentSize().height/2.0)
     self.weapon:setVisible(false)
     self:addChild(self.weapon )
-    
     local dispatcher =  cc.Director:getInstance():getEventDispatcher()
     local listener = cc.EventListenerKeyboard:create()
     
@@ -57,7 +58,9 @@ function Hero.create()
 end
  
 
-
+function Hero:setSkillSprite(sprite)
+    self.skill = sprite
+end
 
 function Hero:stateEnterRun()
     assert(self.entityState ~= ENTITY_STATE.STATE_DIE)
@@ -121,11 +124,15 @@ function Hero:enterStateFight()
     self:stopActionByTag(ACTION_TAG.CHANGING)
     self:stopActionByTag(ACTION_TAG.MOVE)
     self.weapon:stopAllActions()
-    
+
+    --self.skill
     local endFight = function()
         
         self:stateEnterStand()
+        self.skill:setColor(cc.c3b(255,255,255))
     end
+    
+    
     
     
     --self:runAnimationOnce(ANIMATION_TYPE.HERO_ATTACK)
@@ -138,14 +145,15 @@ function Hero:enterStateFight()
     self:runAction(actions)
     self:runAction(attackDelay)
     self.weapon:setVisible(true)
+    self.skill:setColor(cc.c3b(128,128,128))
     self.weapon:runActions(self.direction)
     
     local target = self:getParent():getAttackMonster(self:getPosition(),self.direction)
     if target then 
         self.target = target 
-        self:attack(target)
         self.target:setTarget(self)
         self.target:stateEnterFight()
+        self:attack(target)
     end
 end
 

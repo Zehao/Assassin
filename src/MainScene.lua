@@ -3,17 +3,26 @@ require("layers/MapLayer")
 require("managers/AnimationManager")
 
 
+g_hero=nil
+
+
+
 local MainScene = class("MainScene",function()
     return cc.Scene:create()
 end)
 
 function MainScene.create()
     local scene = MainScene.new()
-    
-    local mapLayer = MapLayer.new()
-    scene:addChild(mapLayer,LAYER_ZORDER.MAP )
+
+
     local infoLayer = InfoLayer:new()
+    infoLayer:setName(CONF.INFO_LAYER_NAME)
     scene:addChild(infoLayer, LAYER_ZORDER.INFO)
+    
+
+    local mapLayer = MapLayer.new()
+    mapLayer:setName(CONF.MAP_LAYER_NAME)
+    scene:addChild(mapLayer,LAYER_ZORDER.MAP )
     
     mapLayer:setInfos(infoLayer)
 
@@ -32,5 +41,7 @@ function MainScene:playBgMusic()
     local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 end
+
+
 
 return MainScene

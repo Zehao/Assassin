@@ -110,6 +110,21 @@ function Monster:stateEnterFight()
     self.scheduleAttackHero = self.scheduler:scheduleScriptFunc(attackHero,1.6,false)
 end
  
+ 
+ function Monster:stateEnterDie()
+ 
+    self:stopAllActions()
+    
+    
+    if  self.scheduleWalk then self.scheduler: unscheduleScriptEntry(self.scheduleWalk) end
+    if self.scheduleFollowAttack then self.scheduler:unscheduleScriptEntry(self.scheduleFollowAttack) end
+    if self.scheduleAttackHero then self.scheduler:unscheduleScriptEntry(self.scheduleAttackHero) end
+    
+    
+    local seq = cc.Sequence:create(cc.Blink:create(0.8,4),cc.CallFunc:create( function() self:getParent():removeEntity(self) end ))
+    self:runAction(seq)
+    
+ end
 
 function Monster:getFocus()
     local targetDirection = self.target:getDirection()
@@ -209,6 +224,7 @@ function Monster.followAttack(dt)
         	node:stateEnterStand()
         	node:stateEnterWalkAround()
         end
+        --反方向回
         local reverseDirection = nil
         if self.direction == ENTITY_DIRECTION.LEFT_DOWN then
             reverseDirection = ENTITY_DIRECTION.RIGHT_UP

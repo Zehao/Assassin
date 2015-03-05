@@ -38,7 +38,7 @@ CONF = {
     --血量，魔法值，伤害等
     HERO_HP = 1000,
     HERO_MP = 500,
-    HERO_DAMAGE = 50,
+    HERO_DAMAGE = 200,
     HERO_DAMAGE_SKILL1 = 100,
     HERO_DAMAGE_SKILL2 = 150,
     HERO_ATTACK_DISTANCE=100,
@@ -51,7 +51,6 @@ CONF = {
     WEAPON_DIRECTIONS = 8,
     
     --monster
-    
     MONSTER1_STATIC_TEXTURE = "monster/monster1_static.png",
     MONSTER1_PLIST = "monster/monster1.plist",
     MONSTER1_PREFIX = "0968-60b2e461-",
@@ -67,5 +66,14 @@ CONF = {
     --ui
     UI_HEAD_JSON = "ui/head/hpmp0.ExportJson",
     UI_MONSTER_JSON="ui/MonsterHP/MonsterHP.ExportJson",
-
+    UI_HERO_SKILL_ENABLE="ui/skill/skill.png",
+    UI_HERO_SKILL_DISABLE="ui/skill/skill2.png",
+    
+    UI_SKILL_NAME="SKILL",
+    
+    
+    --layers
+    MAP_LAYER_NAME="MapLayer",
+    INFO_LAYER_NAME="InfoLayer"
+    
 }

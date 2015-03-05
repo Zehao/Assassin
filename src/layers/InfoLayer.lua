@@ -15,6 +15,18 @@ function InfoLayer:ctor()
     
     self.heroMP = panel:getChildByName("bar_mp")
     
+    
+    
+
+
+    local skill = cc.Sprite:create(CONF.UI_HERO_SKILL_ENABLE)
+    skill:setPosition(350,30)
+    skill:setName(CONF.UI_SKILL_NAME)
+    --skill:setColor(cc.c3b(128,128,128))
+    self:addChild(skill)
+    
+    
+    
     self.monsterWidget =  ccs.GUIReader:getInstance():widgetFromJsonFile(CONF.UI_MONSTER_JSON)
     self.monsterWidget:setPosition(CONF.RESOLUTION_WIDTH - self.monsterWidget:getCustomSize().width,CONF.RESOLUTION_HEIGHT-self.monsterWidget:getCustomSize().height)
     panel = self.monsterWidget:getChildByName("infos")

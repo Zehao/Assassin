@@ -9,6 +9,8 @@ MapLayer.__index = MapLayer
 
 local WIN_SIZE = cc.Director:getInstance():getVisibleSize()
 
+
+
 function MapLayer:ctor()
     self.map = cc.TMXTiledMap:create(CONF.MAP_TILE_PATH)
     assert(self.map,"null map")
@@ -155,7 +157,7 @@ function MapLayer:setEntities()
 
             self.hero = Hero.create()
             --self.hero:runAnimation(ANIMATION_TYPE.HERO_STAND)
-            
+            g_hero = self.hero
             self.hero:setPosition(x,y)
             self.hero:stateEnterStand()
             self:addChild(self.hero , LAYER_ZORDER.ENTITY)
@@ -267,6 +269,7 @@ end
 
 function MapLayer:setInfos(InfoLayer)
 	self.infoLayer = InfoLayer
+	self.hero:setSkillSprite(self.infoLayer:getChildByName(CONF.UI_SKILL_NAME))
     self.infoLayer:setHero(self.hero)
 end
 
