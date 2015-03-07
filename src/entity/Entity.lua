@@ -11,16 +11,10 @@ Entity.__index = Entity
 function Entity:ctor()
     self.direction = ENTITY_DIRECTION.RIGHT_DOWN
     self.isAlive = true
-    self.isAttacking = false
     self.hp=0
     self.moveInfo = nil
     self.entityState = nil
     self:setScale(1.5)
-    local function update()
-        if self.isAttacking == false then return end
-    end
-    
-    --self:scheduleUpdateWithPriorityLua(update, 0)  
 
 end
 
@@ -96,6 +90,12 @@ end
 function Entity:getAnimation(animation_type, direction,loops)
     return AnimationManager:getInstance():getAnimation(animation_type,direction ,loops)
 end
+
+function Entity:getAnimation_M2(animation_type, direction,loops)
+    return AnimationManager:getInstance():getAnimation_M2(animation_type,direction ,loops)
+end
+
+
 
 --function Entity:runAnimation(animation_type)
 --    local animation = AnimationManager:getInstance():getForeverAnimation(animation_type , self.direction)

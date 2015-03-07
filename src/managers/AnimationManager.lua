@@ -18,6 +18,9 @@ function AnimationManager:getInstance()
         
         self.weapon = {}
         self.monster1 = {}
+        self.monster2_attack={}
+        self.monster2_run={}
+        self.monster2_stand={}
         self:initAnimationManager()
      end
      return self.instance
@@ -33,9 +36,16 @@ function AnimationManager:initAnimationManager()
     spriteFrameCache:addSpriteFrames(CONF.HERO_STOP_PLIST,CONF.HERO_STOP_PNG)
     spriteFrameCache:addSpriteFrames(CONF.MONSTER1_PLIST,CONF.MONSTER1_PNG)
     spriteFrameCache:addSpriteFrames(CONF.WEAPON_PLIST,CONF.WEAPON_PNG)
+    
+    spriteFrameCache:addSpriteFrames(CONF.MONSTER2_ATTACK_PLIST,CONF.MONSTER2_ATTACK_PNG)
+    spriteFrameCache:addSpriteFrames(CONF.MONSTER2_RUN_PLIST,CONF.MONSTER2_RUN_PNG)
+    spriteFrameCache:addSpriteFrames(CONF.MONSTER2_STOP_PLIST,CONF.MONSTER2_STOP_PNG)
+    
     self:initHero(spriteFrameCache)
     self:initWeapons(spriteFrameCache)
     self:initMonsters(spriteFrameCache)
+    self:initMonsters2(spriteFrameCache)
+
 end
 
 
@@ -117,6 +127,47 @@ function AnimationManager:initMonsters(spriteFrameCache)
 end
 
 
+function AnimationManager:initMonsters2(spriteFrameCache)
+    --monster attack
+    for i = 0 ,  CONF.MONSTER2_ATTACK_DIRECTIONS-1 do
+        local frames={}
+        for j = 0 , CONF.MONSTER2_ATTACK_FRAME_NUM-1 do
+            local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.MONSTER2_ATTACK_PREFIX,i,j))
+            if frame then
+                frames[#frames+1] = frame
+            end
+        end
+        self.monster2_attack[#self.monster2_attack + 1] = frames
+    end
+
+    --monster2 run
+    for i = 0 ,  CONF.MONSTER2_RUN_DIRECTIONS-1 do
+        local frames={}
+        for j = 0 , CONF.MONSTER2_RUN_FRAME_NUM-1 do
+            local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.MONSTER2_RUN_PREFIX,i,j))
+            if frame then
+                frames[#frames+1] = frame
+            end
+        end
+        --animation = cc.Animation:createWithSpriteFrames(frames,0.08,-1)
+        self.monster2_run[#self.monster2_run + 1 ] = frames
+    end
+
+    --monster2 stand
+    for i = 0 ,  CONF.MONSTER2_STOP_DIRECTIONS-1 do
+        local frames={}
+        for j = 0 , CONF.MONSTER2_STOP_FRAME_NUM-1 do
+            local frame = spriteFrameCache:getSpriteFrame(string.format("%s%02d%03d.png",CONF.MONSTER2_STOP_PREFIX,i,j))
+            if frame then
+                frames[#frames+1] = frame
+            end
+        end
+        --animation = cc.Animation:createWithSpriteFrames(frames,0.1,-1)
+        --animation:retain()
+        self.monster2_stand[#self.monster2_stand+1] = frames
+    end
+end
+
 function AnimationManager:getOnceAnimation(animateType , direction)
     
     return self:getAnimation(animateType,direction,1)
@@ -148,4 +199,23 @@ function AnimationManager:getAnimation(animateType , direction,loops)
     end
     
     return cc.Animation:createWithSpriteFrames(frames,freq,loops)
+end
+
+
+
+function AnimationManager:getAnimation_M2(animateType , direction,loops)
+    local frames
+    local freq=0.08
+
+    if animateType == ANIMATION_TYPE.M2_RUN then
+        frames = self.monster2_run[direction]
+    elseif animateType == ANIMATION_TYPE.M2_STAND then
+        frames = self.monster2_stand[direction]
+        freq = 0.1
+    else
+        frames = self.monster2_attack[direction]
+    end
+
+    return cc.Animation:createWithSpriteFrames(frames,freq,loops)
+
 end

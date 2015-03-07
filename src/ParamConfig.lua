@@ -10,7 +10,7 @@ CONF = {
     MAP_HEIGHT = 3000,
     MAP_WIDTH = 4000,
     MAP_TILESIZE = 50,
-    MAP_TILE_PATH = "bg/bg.tmx",
+    MAP_TILE_PATH = "bg/bg1.tmx",
     MAP_TILE_BG = "bg",
     MAP_TILE_ACCESS = "access",
     MAP_TILE_ENTITY = "entity",
@@ -36,9 +36,9 @@ CONF = {
     HERO_STOP_PNG = "hero/stop.png",
     
     --血量，魔法值，伤害等
-    HERO_HP = 1000,
+    HERO_HP = 800,
     HERO_MP = 500,
-    HERO_DAMAGE = 200,
+    HERO_DAMAGE = 50,
     HERO_DAMAGE_SKILL1 = 100,
     HERO_DAMAGE_SKILL2 = 150,
     HERO_ATTACK_DISTANCE=100,
@@ -50,7 +50,7 @@ CONF = {
     WEAPON_FRAME_NUM = 8,
     WEAPON_DIRECTIONS = 8,
     
-    --monster
+    --monster1
     MONSTER1_STATIC_TEXTURE = "monster/monster1_static.png",
     MONSTER1_PLIST = "monster/monster1.plist",
     MONSTER1_PREFIX = "0968-60b2e461-",
@@ -58,9 +58,31 @@ CONF = {
     MONSTER1_DIRECTIONS = 4,
     MONSTER1_FRAME_NUM = 7,
     
-    MONSTER1_HP = 500,
+    MONSTER1_HP = 200,
     MONSTER1_DAMAGE=20,
     
+    --monster2
+    MONSTER2_STATIC_TEXTURE = "monster/monster2_static.png",
+    MONSTER2_ATTACK_PREFIX = "0061-2a44e34d-",
+    MONSTER2_ATTACK_FRAME_NUM = 11,
+    MONSTER2_ATTACK_DIRECTIONS = 4,
+    MONSTER2_ATTACK_PLIST = "monster/monster2_attack.plist",
+    MONSTER2_ATTACK_PNG = "monster/monster2_attack.png",
+
+    MONSTER2_RUN_PREFIX = "0078-389845d5-",
+    MONSTER2_RUN_FRAME_NUM = 5,
+    MONSTER2_RUN_DIRECTIONS = 4,
+    MONSTER2_RUN_PLIST = "monster/monster2_run.plist",
+    MONSTER2_RUN_PNG = "monster/monster2_run.png",
+
+    MONSTER2_STOP_PREFIX = "0086-3d46505c-",
+    MONSTER2_STOP_FRAME_NUM = 10,
+    MONSTER2_STOP_DIRECTIONS = 4,
+    MONSTER2_STOP_PLIST = "monster/monster2_stand.plist",
+    MONSTER2_STOP_PNG = "monster/monster2_stand.png",
+    
+    MONSTER2_HP = 500,
+    MONSTER2_DAMAGE=60,
     
     
     --ui

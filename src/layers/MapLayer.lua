@@ -1,6 +1,7 @@
 require("ParamConfig")
 require("entity/Hero")
 require("entity/Monster")
+require("entity/Monster2")
 require("types/Types")
 require("types/MoveInfo")
 
@@ -166,13 +167,28 @@ function MapLayer:setEntities()
             monster:setPosition(x,y)
             monster.originalPos = cc.p(x,y)
             monster.direction = math.random(1,CONF.MONSTER1_DIRECTIONS)
+            monster.originalDirection = monster.direction
             --monster:walkAround()
             monster:stateEnterStand()
+            
             monster:stateEnterWalkAround()
             table.insert(self.monsters,monster)
             self:addChild(monster,LAYER_ZORDER.ENTITY)
         else
             -- another monster
+            print("another")
+            local m2 = Monster2.create()
+            m2:setPosition(x,y)
+            m2.originalPos = cc.p(x,y)
+            m2.direction = math.random(1,CONF.MONSTER2_STOP_DIRECTIONS)
+            m2.originalDirection = m2.direction
+            --monster:walkAround()
+            m2:stateEnterStand()
+            m2:stateEnterWalkAround()
+            table.insert(self.monsters,m2)
+            self:addChild(m2,LAYER_ZORDER.ENTITY)
+            
+            
         end
     end 
     
@@ -211,7 +227,7 @@ end
 --set target point when touched
 function MapLayer:getMoveTargetPoint(cur,tar)
     local curPosition = cc.p(cur.x,cur.y)
-    local delta = CONF.MAP_TILESIZE / 2.0
+    local delta = CONF.MAP_TILESIZE
     local theta = math.atan(math.abs((tar.y - cur.y) / (tar.x - cur.x) ) )
 
     local deltaX,deltaY = delta * math.cos(theta) , delta * math.sin(theta)

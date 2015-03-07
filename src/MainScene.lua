@@ -4,6 +4,8 @@ require("managers/AnimationManager")
 
 
 g_hero=nil
+currentMonster = {}
+
 
 
 
