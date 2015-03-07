@@ -14,6 +14,10 @@ Hero.__index = Hero
 function Hero:ctor()
     self.hp = CONF.HERO_HP
     self.mp = CONF.HERO_MP
+    self.fullHp = self.hp
+    self.fullMp = self.mp
+    self.hpBar = nil
+    self.mpBar = nil
     self.damage = CONF.HERO_DAMAGE
     -- need to init
     self.weapon = Weapon.create()
@@ -147,6 +151,7 @@ function Hero:enterStateFight()
     self.weapon:setVisible(true)
     self.skill:setColor(cc.c3b(128,128,128))
     self.weapon:runActions(self.direction)
+
     
     local target = self:getParent():getAttackMonster(self:getPosition(),self.direction)
     if target then 

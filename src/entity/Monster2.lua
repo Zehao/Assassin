@@ -8,6 +8,7 @@ Monster2.__index = Monster2
 
 function Monster2:ctor()
     self.hp = CONF.MONSTER2_HP
+    self.fullHp = self.hp
     self.damage = CONF.MONSTER2_DAMAGE
     self.originalPos = nil
     self.originalDirection = nil

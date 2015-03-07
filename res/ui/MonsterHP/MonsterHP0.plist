@@ -4,24 +4,24 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>bg.png</key>
+			<key>blood_box.png</key>
 			<dict>
 				<key>width</key>
-				<integer>329</integer>
+				<integer>179</integer>
 				<key>height</key>
-				<integer>65</integer>
+				<integer>22</integer>
 				<key>originalWidth</key>
-				<integer>338</integer>
+				<integer>179</integer>
 				<key>originalHeight</key>
-				<integer>73</integer>
+				<integer>22</integer>
 				<key>x</key>
 				<integer>0</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>
-				<real>-4.5</real>
+				<real>0</real>
 				<key>offsetY</key>
-				<real>-4</real>
+				<real>0</real>
 			</dict>
 			<key>blood_in.png</key>
 			<dict>
@@ -34,7 +34,7 @@
 				<key>originalHeight</key>
 				<integer>22</integer>
 				<key>x</key>
-				<integer>331</integer>
+				<integer>181</integer>
 				<key>y</key>
 				<integer>0</integer>
 				<key>offsetX</key>

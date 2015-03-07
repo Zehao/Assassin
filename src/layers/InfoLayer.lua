@@ -24,36 +24,42 @@ function InfoLayer:ctor()
     skill:setName(CONF.UI_SKILL_NAME)
     --skill:setColor(cc.c3b(128,128,128))
     self:addChild(skill)
+    self:addChild(self.heroWidget)
     
-    
-    
-    self.monsterWidget =  ccs.GUIReader:getInstance():widgetFromJsonFile(CONF.UI_MONSTER_JSON)
-    self.monsterWidget:setPosition(CONF.RESOLUTION_WIDTH - self.monsterWidget:getCustomSize().width,CONF.RESOLUTION_HEIGHT-self.monsterWidget:getCustomSize().height)
-    panel = self.monsterWidget:getChildByName("infos")
-    self.monsterHP = panel:getChildByName("bar_hp")
-    
+--    
+--    
+--    self.monsterWidget =  ccs.GUIReader:getInstance():widgetFromJsonFile(CONF.UI_MONSTER_JSON)
+--    self.monsterWidget:setPosition(CONF.RESOLUTION_WIDTH - self.monsterWidget:getCustomSize().width,CONF.RESOLUTION_HEIGHT-self.monsterWidget:getCustomSize().height)
+--    
+--    self.monsterHP = self.monsterWidget:getChildByName("bar_hp")
+--    
     
     --初始不可见
-    self.monsterWidget:setVisible(false)
-    self.monster = nil
-    self:addChild(self.heroWidget)
-    self:addChild(self.monsterWidget)
+--    self.monsterWidget:setVisible(false)
+--    self.monster = nil
+    
+--    self:addChild(self.monsterWidget)
+    
     --self:spreadTouchEvent()
     
     --local scheduler = cc.Director:getInstance():getScheduler()
     
     local function update()
         if self.hero then
-            self.heroHP:setPercent(self.hero.hp*100/CONF.HERO_HP)
-            self.heroMP:setPercent(self.hero.mp*100/CONF.HERO_MP)
-        end
-        
-        if self.monster then
-            self.monsterHP:setPercent(self.monster.hp *100/ CONF.MONSTER1_HP)
+            if self.hero.hp < CONF.HERO_HP then
+                self.hero.hp =self.hero.hp+ 2
+                self.heroHP:setPercent(self.hero.hp*100/CONF.HERO_HP)
+            end
+            if self.hero.mp < CONF.HERO_MP then
+                self.hero.mp = self.hero.mp + 2
+                self.heroMP:setPercent(self.hero.mp*100/CONF.HERO_MP)
+            end
         end
     end
+    self.scheduler = cc.Director:getInstance():getScheduler()
+    self.scheduleHPMP = self.scheduler:scheduleScriptFunc(update,1,false)
     
-    self:scheduleUpdateWithPriorityLua(update, 0)  
+    --self:scheduleUpdateWithPriorityLua(update, 0)  
 end
 
 

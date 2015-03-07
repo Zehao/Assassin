@@ -10,11 +10,13 @@ Monster.__index = Monster
 
 function Monster:ctor()
     self.hp = CONF.MONSTER1_HP
+    self.fullHp = self.hp
     self.damage = CONF.MONSTER1_DAMAGE
     self.originalPos = nil
     self.originalDirection = nil
     self.scheduler = cc.Director:getInstance():getScheduler()
     self.isAttacked = false
+    self.monsterHPBar=nil
     self.target = nil
 end
 

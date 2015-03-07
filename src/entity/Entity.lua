@@ -38,6 +38,12 @@ function Entity:attack(target)
 
     target.hp = target.hp - self.damage
     
+    if target == g_hero then
+        target.mp = target.mp-20
+        target.mpBar:setPercent(target.mp *100/ target.fullMp)
+    end
+    target.hpBar:setPercent(target.hp *100/ target.fullHp)
+    
     target:runAction(cc.Blink:create(0.3,2))
     if target.hp <=0 then
         target.hp = 0

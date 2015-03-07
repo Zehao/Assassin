@@ -87,7 +87,7 @@ CONF = {
     
     --ui
     UI_HEAD_JSON = "ui/head/hpmp0.ExportJson",
-    UI_MONSTER_JSON="ui/MonsterHP/MonsterHP.ExportJson",
+    UI_MONSTER_JSON="ui/MonsterHP/MonsterHP_1.ExportJson",
     UI_HERO_SKILL_ENABLE="ui/skill/skill.png",
     UI_HERO_SKILL_DISABLE="ui/skill/skill2.png",
     

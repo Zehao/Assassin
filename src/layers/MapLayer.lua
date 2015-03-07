@@ -168,6 +168,12 @@ function MapLayer:setEntities()
             monster.originalPos = cc.p(x,y)
             monster.direction = math.random(1,CONF.MONSTER1_DIRECTIONS)
             monster.originalDirection = monster.direction
+            
+            local monsterWidget =  ccs.GUIReader:getInstance():widgetFromJsonFile(CONF.UI_MONSTER_JSON)
+            monsterWidget:setPosition(cc.p(25,monster:getContentSize().height))
+            monster.hpBar = monsterWidget:getChildByName("info"):getChildByName("bar_hp")
+            monster:addChild(monsterWidget)
+            
             --monster:walkAround()
             monster:stateEnterStand()
             
@@ -176,12 +182,18 @@ function MapLayer:setEntities()
             self:addChild(monster,LAYER_ZORDER.ENTITY)
         else
             -- another monster
-            print("another")
             local m2 = Monster2.create()
             m2:setPosition(x,y)
             m2.originalPos = cc.p(x,y)
             m2.direction = math.random(1,CONF.MONSTER2_STOP_DIRECTIONS)
             m2.originalDirection = m2.direction
+            
+            local monsterWidget =  ccs.GUIReader:getInstance():widgetFromJsonFile(CONF.UI_MONSTER_JSON)
+            monsterWidget:setPosition(cc.p(25,m2:getContentSize().height))
+            m2.hpBar = monsterWidget:getChildByName("info"):getChildByName("bar_hp")
+            m2:addChild(monsterWidget)
+            
+            
             --monster:walkAround()
             m2:stateEnterStand()
             m2:stateEnterWalkAround()
@@ -287,6 +299,9 @@ function MapLayer:setInfos(InfoLayer)
 	self.infoLayer = InfoLayer
 	self.hero:setSkillSprite(self.infoLayer:getChildByName(CONF.UI_SKILL_NAME))
     self.infoLayer:setHero(self.hero)
+    
+    self.hero.hpBar = self.infoLayer.heroHP
+    self.hero.mpBar = self.infoLayer.heroMP
 end
 
 
