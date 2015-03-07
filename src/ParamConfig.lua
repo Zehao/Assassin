@@ -82,7 +82,7 @@ CONF = {
     MONSTER2_STOP_PNG = "monster/monster2_stand.png",
     
     MONSTER2_HP = 500,
-    MONSTER2_DAMAGE=60,
+    MONSTER2_DAMAGE=50,
     
     
     --ui
@@ -93,7 +93,7 @@ CONF = {
     
     UI_SKILL_NAME="SKILL",
     
-    
+    POP_JSON = "ui/endgame/DemoMap.ExportJson",
     --layers
     MAP_LAYER_NAME="MapLayer",
     INFO_LAYER_NAME="InfoLayer"

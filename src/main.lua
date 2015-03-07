@@ -49,10 +49,6 @@ local function main()
 
 end
 
-function g_endGame()
-    
-end
-
 
 local status, msg = xpcall(main, __G__TRACKBACK__)
 if not status then

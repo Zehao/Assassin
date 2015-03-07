@@ -42,12 +42,12 @@
     <property name="type" value="m1"/>
    </properties>
   </object>
-  <object x="460" y="2612" width="28" height="20">
+  <object x="493" y="2367" width="28" height="20">
    <properties>
     <property name="type" value="m2"/>
    </properties>
   </object>
-  <object x="884" y="2160" width="24" height="32">
+  <object x="829.333" y="2028" width="24" height="32">
    <properties>
     <property name="type" value="m2"/>
    </properties>
@@ -88,6 +88,36 @@
    </properties>
   </object>
   <object x="1196" y="2560">
+   <properties>
+    <property name="type" value="m1"/>
+   </properties>
+  </object>
+  <object x="2040" y="1056" width="12" height="24">
+   <properties>
+    <property name="type" value="m1"/>
+   </properties>
+  </object>
+  <object x="2424" y="1608" width="8" height="12">
+   <properties>
+    <property name="type" value="m1"/>
+   </properties>
+  </object>
+  <object x="3284" y="2510" width="8" height="12">
+   <properties>
+    <property name="type" value="m1"/>
+   </properties>
+  </object>
+  <object x="692" y="254" width="8" height="12">
+   <properties>
+    <property name="type" value="m1"/>
+   </properties>
+  </object>
+  <object x="1012" y="1110" width="8" height="12">
+   <properties>
+    <property name="type" value="m1"/>
+   </properties>
+  </object>
+  <object x="2672" y="2042" width="8" height="12">
    <properties>
     <property name="type" value="m1"/>
    </properties>

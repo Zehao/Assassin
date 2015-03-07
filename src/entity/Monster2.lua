@@ -2,6 +2,13 @@
 require("entity.Entity")
 require("ParamConfig")
 
+
+--[[
+    Monster类的复制版本
+        加入新的monster动画后为不影响原来的效果而保存。
+
+]]
+
 Monster2 = class("Monster2", function(filepath) return Entity.new(filepath) end )
 
 Monster2.__index = Monster2
@@ -122,7 +129,7 @@ function Monster2:stateEnterFight()
         self:runAction(cc.Sequence:create(attackAction,attackAction:reverse()))
     end
 
-    self.scheduleAttackHero = self.scheduler:scheduleScriptFunc(attackHero,1.6,false)
+    self.scheduleAttackHero = self.scheduler:scheduleScriptFunc(attackHero,1,false)
 end
 
 

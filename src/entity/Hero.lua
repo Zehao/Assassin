@@ -115,7 +115,10 @@ end
 function Hero:stateEnterDie()
     self:stopActionByTag(ACTION_TAG.CHANGING)
     self.entityState = ENTITY_STATE.STATE_DIE
+    
+    
     self:removeFromParentAndCleanup()
+    
     return true
 end
 
@@ -151,6 +154,9 @@ function Hero:enterStateFight()
     self.weapon:setVisible(true)
     self.skill:setColor(cc.c3b(128,128,128))
     self.weapon:runActions(self.direction)
+
+    self.mp = self.mp-20
+    self.mpBar:setPercent(self.mp *100/ self.fullMp)
 
     
     local target = self:getParent():getAttackMonster(self:getPosition(),self.direction)

@@ -1,11 +1,20 @@
 require("types/Types")
 require("ParamConfig")
+require("layers/PopLayer")
 require("managers/AnimationManager")
 Entity = class("Entity",function(filepath)
     return cc.Sprite:create(filepath)
 end)
 
 Entity.__index = Entity
+
+
+function g_endGame()
+    local layer = cc.Director:getInstance():getRunningScene()
+    local pop = PopLayer.new()
+    layer:addChild(pop,1000)
+end
+
 
 
 function Entity:ctor()
@@ -37,16 +46,13 @@ end
 function Entity:attack(target)
 
     target.hp = target.hp - self.damage
-    
-    if target == g_hero then
-        target.mp = target.mp-20
-        target.mpBar:setPercent(target.mp *100/ target.fullMp)
-    end
+
     target.hpBar:setPercent(target.hp *100/ target.fullHp)
     
     target:runAction(cc.Blink:create(0.3,2))
     if target.hp <=0 then
         target.hp = 0
+        self:stopAllActions()
         if target == g_hero then
             g_endGame()
         end
