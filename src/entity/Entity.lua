@@ -52,7 +52,7 @@ function Entity:attack(target)
     target:runAction(cc.Blink:create(0.3,2))
     if target.hp <=0 then
         target.hp = 0
-        self:stopAllActions()
+        --self:stopAllActions()
         if target == g_hero then
             g_endGame()
         end

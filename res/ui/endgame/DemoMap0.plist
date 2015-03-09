@@ -26,13 +26,13 @@
 			<key>ok.png</key>
 			<dict>
 				<key>width</key>
-				<integer>600</integer>
+				<integer>193</integer>
 				<key>height</key>
-				<integer>181</integer>
+				<integer>103</integer>
 				<key>originalWidth</key>
-				<integer>600</integer>
+				<integer>193</integer>
 				<key>originalHeight</key>
-				<integer>181</integer>
+				<integer>103</integer>
 				<key>x</key>
 				<integer>414</integer>
 				<key>y</key>
@@ -42,16 +42,16 @@
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
-			<key>pop.jpg</key>
+			<key>无标题-1.png</key>
 			<dict>
 				<key>width</key>
-				<integer>431</integer>
+				<integer>900</integer>
 				<key>height</key>
-				<integer>322</integer>
+				<integer>600</integer>
 				<key>originalWidth</key>
-				<integer>431</integer>
+				<integer>900</integer>
 				<key>originalHeight</key>
-				<integer>322</integer>
+				<integer>600</integer>
 				<key>x</key>
 				<integer>0</integer>
 				<key>y</key>
